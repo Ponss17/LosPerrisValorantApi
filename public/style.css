@@ -82,28 +82,6 @@ body {
     color: var(--text-primary);
     font-family: var(--font-main);
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    min-height: 100vh;
-    padding: 2rem;
-}
-
-.lang-selector {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    display: flex;
-    gap: 10px;
-}
-
-.lang-btn {
-    background: transparent;
-    border: 1px solid var(--text-muted);
-    color: var(--text-muted);
-    padding: 5px 10px;
-    cursor: pointer;
-    font-weight: bold;
-    transition: 0.3s;
 }
 
 .lang-btn.active,
