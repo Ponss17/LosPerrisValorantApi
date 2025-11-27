@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LosPerris Valorant Api</title>
+    <link rel="icon" type="image/x-icon" href="imgs/LosPerris-gamer.ico">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&family=Roboto:wght@400;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <div class="lang-selector">
+        <button class="lang-btn active" data-lang="es">ES</button>
+        <button class="lang-btn" data-lang="en">EN</button>
+    </div>
+
+    <div class="main-container">
+        <header>
+            <h1 id="title">LOSPERRIS <span class="accent">VALORANT API</span></h1>
+            <p id="subtitle">Rango, Historial y Comandos para Streamers</p>
+        </header>
+
+        <div class="grid-layout">
+            <section class="card search-card">
+                <form id="rank-form">
+                    <div class="form-group">
+                        <label for="region">Region</label>
+                        <select id="region" required>
+                            <option value="na">NA</option>
+                            <option value="eu">EU</option>
+                            <option value="ap">AP</option>
+                            <option value="kr">KR</option>
+                            <option value="latam">LATAM</option>
+                            <option value="br">BR</option>
+                        </select>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="name">Riot ID</label>
+                            <input type="text" id="name" placeholder="PonssLoveless" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="tag">Tag</label>
+                            <input type="text" id="tag" placeholder="8882" required>
+                        </div>
+                    </div>
+                    <button type="submit" id="submit-btn" class="btn-primary">BUSCAR</button>
+                </form>
+            </section>
+
+            <div id="result" class="hidden">
+                <section class="card rank-card" id="player-card-bg">
+                    <div class="overlay"></div>
+                    <div class="card-content">
+                        <img id="rank-img" src="" alt="Rank" class="rank-icon">
+                        <div class="info">
+                            <h2 id="player-name">Player#Tag</h2>
+                            <div class="rank-badge" id="rank-text">Gold 1</div>
+                            <div class="stats">
+                                <span><i class="icon-elo"></i> <span id="elo">1200</span> ELO</span>
+                                <span id="mmr-change" class="mmr-change">+15</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="card match-card">
+                    <h3><span id="last-match-title">Última Partida</span></h3>
+                    <div class="match-details">
+                        <div class="match-header">
+                            <span id="match-map" class="map-name">Ascent</span>
+                            <span id="match-result" class="match-result win">VICTORIA</span>
+                        </div>
+                        <div class="kda-container">
+                            <span class="kda-label">K/D/A</span>
+                        </div>
+                        <div class="command-item">
+                            <label>!lastmatch</label>
+                            <div class="copy-box">
+                                <input type="text" id="cmd-match" readonly>
+                                <button class="btn-copy" data-target="cmd-match">COPY</button>
+                            </div>
+                        </div>
+                </section>
+            </div>
+
+            <div id="error" class="hidden">
+                <p id="error-msg">Jugador no encontrado</p>
+            </div>
+
+            <section class="card docs-card">
+                <h3>API Documentation</h3>
+                <div class="doc-item">
+                    <span class="method">GET</span>
+                    <span class="url">/rank/:region/:name/:tag</span>
+                    <p class="desc">devuelve el rango, elo y mmr data.</p>
+                </div>
+                <div class="doc-item">
+                    <span class="method">GET</span>
+                    <span class="url">/match/last/:region/:name/:tag</span>
+                    <p class="desc">devuelve data de la ultima partida competitiva.</p>
+                </div>
+                <div class="doc-note">
+                    <p>agrega <code>?format=text</code> a cualquier endpoint para una respuesta en texto plano.</p>
+                </div>
+            </section>
+        </div>
+
+        <footer>
+            <p>Createdo por <a href="https://www.instagram.com/ponss_jean/" target="_blank">Ponss17</a></p>
+            <p>Mira mi otra Api <a href="https://www.losperris.site/" target="_blank" class="highlight-link">LosPerris
+                    Followage API</a></p>
+            <p class="disclaimer">La API de Valorant de LosPerris no cuenta con el respaldo de Riot Games y no refleja
+                las opiniones ni los puntos de vista de Riot Games ni de ninguna persona involucrada oficialmente en la
+                producción o gestión de propiedades de Riot Games.
+                Riot Games y todas las propiedades asociadas son marcas comerciales o marcas registradas de Riot Games,
+                Inc.
+            </p>
+        </footer>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>
