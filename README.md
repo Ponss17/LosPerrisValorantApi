@@ -1,82 +1,63 @@
 # LosPerris Valorant Api
 
-API de Valorant diseñada para streamers, con soporte nativo para Nightbot y un Hub Visual moderno para generar comandos fácilmente.
+**Tu Hub definitivo para comandos de Valorant.**
+Diseñado para streamers, esta herramienta te permite generar comandos personalizados para tu chat (Nightbot, StreamElements, etc.) sin tocar una sola línea de código.
 
 ![Preview](public/imgs/LosPerris-gamer.ico)
 
-## Características
+## 🚀 Cómo Usar (Web)
 
--   **Rango Actual**: Obtén tu rango, ELO y RR actual.
--   **Última Partida**: Detalles de tu última partida competitiva (Mapa, Resultado, KDA).
--   **Soporte Nightbot**: Respuestas en texto plano optimizadas para comandos de chat (`!rank`, `!lastmatch`).
--   **Personalización Avanzada**:
-    -   **Idiomas**: Español (`es`) e Inglés (`en`).
-    -   **Formatos**: Elige qué información mostrar (Solo Rango, +RR, +ELO).
--   **Hub Visual**: Interfaz web limpia y oscura (estilo Valorant) para buscar jugadores y generar tus comandos.
+No necesitas instalar nada. Todo funciona desde la web.
 
-## Instalación Local
+### 1. Busca tu Perfil
+Ingresa tu **Riot ID** y **Tag** (ej. `PonssLoveless #8882`) y selecciona tu región.
+- Verás tu **Rango Actual** con tu ELO y RR.
+- Verás tu **Última Partida** con el resultado y KDA.
 
-1.  Clona el repositorio.
-2.  Instala las dependencias:
-    ```bash
-    npm install
-    ```
-3.  Crea un archivo `.env` en la raíz y agrega tu API Key de HenrikDev (Obténla en [HenrikDev API](https://docs.henrikdev.xyz/)):
-    ```env
-    HENRIK_API_KEY=tu_api_key_aqui
-    ```
-4.  Inicia el servidor:
-    ```bash
-    npm run dev
-    ```
-5.  Abre `http://localhost:3000` en tu navegador.
+### 2. Configura tu Bot
+Una vez carguen tus datos, baja a la sección **"Configuración del Bot"**.
+Aquí puedes personalizar cómo quieres que responda el bot en tu chat:
 
-## Despliegue en Vercel
+- **Plataforma**: Elige tu bot (Nightbot, StreamElements, Fossabot, Streamlabs).
+- **Idioma**: ¿Tu stream es en Español o Inglés?
+- **Formato de Rango**:
+    - *Solo Rango*: "Gold 1"
+    - *Rango + Puntos*: "Gold 1 - 50 RR"
+    - *Completo*: "Gold 1 - 50 RR (1200 ELO)"
 
-Este proyecto está optimizado para Vercel.
+### 3. ¡Copia y Pega!
+En la sección **"Comandos del Bot"**, verás que los códigos se actualizan automáticamente según tu configuración.
+Solo dale al botón **COPY** y pégalo en el chat de tu stream.
 
-1.  Sube tu código a GitHub.
-2.  Importa el proyecto en Vercel.
-3.  En la configuración del proyecto en Vercel, ve a **Settings > Environment Variables** y agrega:
-    -   Key: `HENRIK_API_KEY`
-    -   Value: `tu_api_key_real`
-4.  ¡Despliega!
+---
 
-## Documentación de la API
+## 🤖 Plataformas Soportadas
 
-### 1. Obtener Rango
+El generador web soporta nativamente:
+- **Nightbot**: `$(urlfetch ...)`
+- **StreamElements**: `${customapi ...}`
+- **Fossabot**: `$(customapi ...)`
+- **Streamlabs**: `{readapi ...}`
+
+---
+
+## 🛠️ Para Desarrolladores (API Endpoints)
+
+Si eres dev y quieres usar la API directamente, aquí tienes los endpoints:
+
+### Rango
 `GET /rank/:region/:name/:tag`
+- `?format=text` (Opcional: respuesta en texto plano)
 
-**Parámetros Query (Opcionales):**
--   `format`: `text` (Para respuesta en texto plano, ideal para bots).
--   `lang`: `es` (Español) | `en` (Inglés - Default).
--   `type`:
-    -   `1`: Solo Rango (ej. "Gold 1")
-    -   `2`: Rango + RR (ej. "Gold 1 - 50 RR")
-    -   `3`: Rango + RR + ELO (ej. "Gold 1 - 50 RR (1200 ELO)")
-
-**Ejemplo Nightbot:**
-```
-$(urlfetch https://tu-dominio.vercel.app/rank/na/PonssLoveless/8882?format=text&lang=es&type=2)
-```
-
-### 2. Obtener Última Partida
+### Última Partida
 `GET /match/last/:region/:name/:tag`
+- `?format=text` (Opcional: respuesta en texto plano)
 
-**Parámetros Query (Opcionales):**
--   `format`: `text`
--   `lang`: `es` | `en`
-
-**Ejemplo Nightbot:**
-```
-$(urlfetch https://tu-dominio.vercel.app/match/last/na/PonssLoveless/8882?format=text&lang=es)
-```
+---
 
 ## Créditos
 
-Creado por [Ponss17](https://www.instagram.com/ponss_jean/).
-
+Creado con ❤️ por [Ponss17](https://www.instagram.com/ponss_jean/).
 Mira mi otra API: [LosPerris Followage API](https://www.losperris.site/).
 
----
 *Disclaimer: LosPerris Valorant Api isn't endorsed by Riot Games and doesn't reflect the views or opinions of Riot Games or anyone officially involved in producing or managing Riot Games properties. Riot Games, and all associated properties are trademarks or registered trademarks of Riot Games, Inc.*
