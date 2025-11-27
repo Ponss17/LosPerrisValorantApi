@@ -78,45 +78,86 @@
                         </div>
                         <div class="kda-container">
                             <span class="kda-label">K/D/A</span>
+                            <span id="match-kda" class="kda-value">15/10/5</span>
                         </div>
-                        <div class="command-item">
-                            <section class="card docs-card">
-                                <h3>API Documentation</h3>
-                                <div class="doc-item">
-                                    <span class="method">GET</span>
-                                    <span class="url">/rank/:region/:name/:tag</span>
-                                    <p class="desc">devuelve el rango, elo y mmr data.</p>
-                                </div>
-                                <div class="doc-item">
-                                    <span class="method">GET</span>
-                                    <span class="url">/match/last/:region/:name/:tag</span>
-                                    <p class="desc">devuelve data de la ultima partida competitiva.</p>
-                                </div>
-                                <div class="doc-note">
-                                    <p>agrega <code>?format=text</code> a cualquier endpoint para una respuesta en texto
-                                        plano.</p>
-                                </div>
-                            </section>
-                        </div>
-
-                        <footer>
-                            <p>Createdo por <a href="https://www.instagram.com/ponss_jean/" target="_blank">Ponss17</a>
-                            </p>
-                            <p>Mira mi otra Api <a href="https://www.losperris.site/" target="_blank"
-                                    class="highlight-link">LosPerris
-                                    Followage API</a></p>
-                            <p class="disclaimer">La API de Valorant de LosPerris no cuenta con el respaldo de Riot
-                                Games y no refleja
-                                las opiniones ni los puntos de vista de Riot Games ni de ninguna persona involucrada
-                                oficialmente en la
-                                producción o gestión de propiedades de Riot Games.
-                                Riot Games y todas las propiedades asociadas son marcas comerciales o marcas registradas
-                                de Riot Games,
-                                Inc.
-                            </p>
-                        </footer>
                     </div>
-                    <script src="script.js"></script>
+                </section>
+
+                <section class="card config-card">
+                    <h3>Configuración del Bot</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="bot-lang">Idioma del Bot</label>
+                            <select id="bot-lang">
+                                <option value="es">Español</option>
+                                <option value="en">English</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="bot-type">Formato de Rango</label>
+                            <select id="bot-type">
+                                <option value="1">Solo Rango</option>
+                                <option value="2">Rango + Puntos</option>
+                                <option value="3">Rango + Puntos + ELO</option>
+                            </select>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="card commands-card">
+                    <h3>Comandos Nightbot</h3>
+                    <div class="command-item">
+                        <label>!rank</label>
+                        <div class="copy-box">
+                            <input type="text" id="cmd-rank" readonly>
+                            <button class="btn-copy" data-target="cmd-rank">COPY</button>
+                        </div>
+                    </div>
+                    <div class="command-item">
+                        <label>!lastmatch</label>
+                        <div class="copy-box">
+                            <input type="text" id="cmd-match" readonly>
+                            <button class="btn-copy" data-target="cmd-match">COPY</button>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <div id="error" class="hidden">
+                <p id="error-msg">Jugador no encontrado</p>
+            </div>
+
+            <section class="card docs-card">
+                <h3>API Documentation</h3>
+                <div class="doc-item">
+                    <span class="method">GET</span>
+                    <span class="url">/rank/:region/:name/:tag</span>
+                    <p class="desc">devuelve el rango, elo y mmr data.</p>
+                </div>
+                <div class="doc-item">
+                    <span class="method">GET</span>
+                    <span class="url">/match/last/:region/:name/:tag</span>
+                    <p class="desc">devuelve data de la ultima partida competitiva.</p>
+                </div>
+                <div class="doc-note">
+                    <p>agrega <code>?format=text</code> a cualquier endpoint para una respuesta en texto plano.</p>
+                </div>
+            </section>
+        </div>
+
+        <footer>
+            <p>Creado por <a href="https://www.instagram.com/ponss_jean/" target="_blank">Ponss17</a></p>
+            <p>Mira mi otra Api <a href="https://www.losperris.site/" target="_blank" class="highlight-link">LosPerris
+                    Followage API</a></p>
+            <p class="disclaimer">La API de Valorant de LosPerris no cuenta con el respaldo de Riot Games y no refleja
+                las opiniones ni los puntos de vista de Riot Games ni de ninguna persona involucrada oficialmente en la
+                producción o gestión de propiedades de Riot Games.
+                Riot Games y todas las propiedades asociadas son marcas comerciales o marcas registradas de Riot Games,
+                Inc.
+            </p>
+        </footer>
+    </div>
+    <script src="script.js"></script>
 </body>
 
 </html>
