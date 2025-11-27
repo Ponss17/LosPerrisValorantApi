@@ -4,67 +4,6 @@
     --accent-color: #ff4655;
     --text-color: #ece8e1;
     --text-muted: #768079;
-}
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    font-family: 'Roboto', sans-serif;
-    background-color: var(--bg-color);
-    color: var(--text-color);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    background-image: url('https://media.valorant-api.com/maps/2c9d57ec-4431-9c5e-2939-8f9ef6dd5cba/splash.png');
-    background-size: cover;
-    background-position: center;
-    background-blend-mode: multiply;
-}
-
-.container {
-    width: 100%;
-    max-width: 500px;
-    padding: 2rem;
-    background-color: rgba(15, 25, 35, 0.95);
-    border: 1px solid var(--text-muted);
-    border-radius: 4px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-}
-
-header {
-    text-align: center;
-    margin-bottom: 2rem;
-}
-
-h1 {
-    font-family: 'Oswald', sans-serif;
-    font-size: 3rem;
-    letter-spacing: 2px;
-    margin-bottom: 0.5rem;
-}
-
-.accent {
-    color: var(--accent-color);
-}
-
-p {
-    color: var(--text-muted);
-    font-size: 0.9rem;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-:root {
-    --bg-color: #0f1923;
-    --card-bg: #1f2731;
-    --accent: #ff4655;
-    --text-primary: #ffffff;
-    --text-muted: #8b9bb4;
     --success: #00ffbc;
     --danger: #ff4655;
     --font-main: 'Roboto', sans-serif;
@@ -78,16 +17,42 @@ p {
 }
 
 body {
-    background-color: var(--bg-color);
-    color: var(--text-primary);
     font-family: var(--font-main);
+    background-color: var(--bg-color);
+    color: var(--text-color);
     display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-image: url('https://media.valorant-api.com/maps/2c9d57ec-4431-9c5e-2939-8f9ef6dd5cba/splash.png');
+    background-size: cover;
+    background-position: center;
+    background-blend-mode: multiply;
+    padding: 2rem;
+}
+
+.lang-selector {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    gap: 10px;
+}
+
+.lang-btn {
+    background: transparent;
+    border: 1px solid var(--text-muted);
+    color: var(--text-muted);
+    padding: 5px 10px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s;
 }
 
 .lang-btn.active,
 .lang-btn:hover {
-    border-color: var(--accent);
-    color: var(--accent);
+    border-color: var(--accent-color);
+    color: var(--accent-color);
 }
 
 .main-container {
@@ -105,14 +70,18 @@ h1 {
     font-family: var(--font-header);
     font-size: 3rem;
     letter-spacing: 2px;
+    margin-bottom: 0.5rem;
 }
 
 .accent {
-    color: var(--accent);
+    color: var(--accent-color);
 }
 
 #subtitle {
     color: var(--text-muted);
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
     margin-top: 10px;
 }
 
@@ -130,6 +99,7 @@ h1 {
     border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
+/* Search Form */
 .search-card form {
     display: flex;
     flex-direction: column;
@@ -169,18 +139,97 @@ select {
 
 input:focus,
 select:focus {
-    border-color: var(--accent);
+    border-color: var(--accent-color);
     outline: none;
 }
 
 .btn-primary {
-    background: var(--accent);
+    background: var(--accent-color);
     color: white;
     border: none;
     padding: 15px;
     font-weight: bold;
     cursor: pointer;
     text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: 0.3s;
+    margin-top: 10px;
+}
+
+.btn-primary:hover {
+    background: #d93644;
+}
+
+.btn-primary:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+/* Rank Card */
+.rank-card {
+    position: relative;
+    overflow: hidden;
+    min-height: 128px;
+    /* Fixed height for wide card */
+    display: flex;
+    align-items: center;
+    background-size: cover;
+    background-position: center;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, rgba(15, 25, 35, 1) 0%, rgba(15, 25, 35, 0.8) 50%, rgba(15, 25, 35, 0.4) 100%);
+    z-index: 1;
+}
+
+.card-content {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    gap: 25px;
+    width: 100%;
+    padding-left: 10px;
+}
+
+.player-card-small {
+    width: 80px;
+    height: 80px;
+    border-radius: 4px;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    object-fit: cover;
+}
+
+.rank-icon {
+    width: 70px;
+    height: 70px;
+    filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.5));
+}
+
+.info h2 {
+    font-family: var(--font-header);
+    font-size: 1.5rem;
+    margin-bottom: 5px;
+}
+
+.rank-badge {
+    color: var(--accent-color);
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin-bottom: 5px;
+}
+
+.stats {
+    display: flex;
+    gap: 15px;
     font-size: 0.9rem;
     color: var(--text-muted);
 }
@@ -189,6 +238,7 @@ select:focus {
     color: var(--success);
 }
 
+/* Match Card */
 .match-card h3 {
     font-family: var(--font-header);
     margin-bottom: 15px;
@@ -243,7 +293,9 @@ select:focus {
     font-size: 1.1rem;
 }
 
-.commands-card h3 {
+/* Commands & Config */
+.commands-card h3,
+.config-card h3 {
     font-family: var(--font-header);
     margin-bottom: 15px;
     color: var(--text-muted);
@@ -265,17 +317,27 @@ select:focus {
     border: none;
     font-family: monospace;
     font-size: 0.9rem;
+    color: var(--text-color);
+    padding: 10px;
+    border-radius: 4px;
 }
 
 .btn-copy {
-    background: var(--text-muted);
+    background: white;
     color: var(--bg-color);
     border: none;
     padding: 0 15px;
     font-weight: bold;
-    background: white;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: 0.2s;
 }
 
+.btn-copy:hover {
+    background: #ddd;
+}
+
+/* Docs */
 .docs-card h3 {
     font-family: var(--font-header);
     margin-bottom: 20px;
@@ -288,18 +350,18 @@ select:focus {
     padding: 15px;
     border-radius: 4px;
     margin-bottom: 15px;
-    border-left: 3px solid var(--accent);
+    border-left: 3px solid var(--accent-color);
 }
 
 .method {
     font-weight: bold;
-    color: var(--accent);
+    color: var(--accent-color);
     margin-right: 10px;
 }
 
 .url {
     font-family: monospace;
-    color: var(--text-primary);
+    color: white;
 }
 
 .desc {
@@ -332,7 +394,7 @@ footer {
 }
 
 footer a {
-    color: var(--accent);
+    color: var(--accent-color);
     text-decoration: none;
     transition: 0.2s;
 }
@@ -375,5 +437,11 @@ footer a:hover {
     .card-content {
         flex-direction: column;
         text-align: center;
+        padding-left: 0;
+    }
+
+    .rank-card {
+        min-height: auto;
+        padding: 20px;
     }
 }
