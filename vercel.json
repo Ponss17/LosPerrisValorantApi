@@ -8,11 +8,11 @@
     ],
     "rewrites": [
         {
-            "source": "/rank/(.*)",
+            "source": "/valorantapi",
             "destination": "/api/index.js"
         },
         {
-            "source": "/match/(.*)",
+            "source": "/valorantapi/(.*)",
             "destination": "/api/index.js"
         },
         {
