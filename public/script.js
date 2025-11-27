@@ -38,6 +38,16 @@ const translations = {
 let currentLang = 'es';
 let currentData = null;
 
+// Determine base URL for API requests
+const getBaseUrl = () => {
+    const path = window.location.pathname;
+    if (path.startsWith('/valorantapi')) {
+        return '/valorantapi';
+    }
+    return '';
+};
+const apiBase = getBaseUrl();
+
 document.querySelectorAll('.lang-btn').forEach(btn => {
     btn.addEventListener('click', () => {
         document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
@@ -79,7 +89,7 @@ function updateCommands() {
     const botLang = document.getElementById('bot-lang').value;
     const botType = document.getElementById('bot-type').value;
 
-    const baseUrl = window.location.origin;
+    const baseUrl = window.location.origin + apiBase;
 
     const rankCmd = `$(urlfetch ${baseUrl}/rank/${region}/${name}/${tag}?format=text&lang=${botLang}&type=${botType})`;
     document.getElementById('cmd-rank').value = rankCmd;
@@ -104,7 +114,7 @@ document.getElementById('rank-form').addEventListener('submit', async (e) => {
     submitBtn.textContent = currentLang === 'es' ? 'Buscando jugador...' : 'Searching...';
 
     try {
-        const rankRes = await fetch(`/rank/${region}/${name}/${tag}`);
+        const rankRes = await fetch(`${apiBase}/rank/${region}/${name}/${tag}`);
         const rankData = await rankRes.json();
 
         if (rankRes.ok) {
@@ -130,7 +140,7 @@ document.getElementById('rank-form').addEventListener('submit', async (e) => {
                 }
             }
 
-            const matchRes = await fetch(`/match/last/${region}/${name}/${tag}`);
+            const matchRes = await fetch(`${apiBase}/match/last/${region}/${name}/${tag}`);
             const matchData = await matchRes.json();
 
             if (matchRes.ok) {
