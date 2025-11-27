@@ -98,9 +98,10 @@ document.getElementById('rank-form').addEventListener('submit', async (e) => {
     const name = document.getElementById('name').value;
     const tag = document.getElementById('tag').value;
     const submitBtn = document.getElementById('submit-btn');
+    const originalBtnText = submitBtn.textContent;
 
     submitBtn.disabled = true;
-    submitBtn.textContent = '...';
+    submitBtn.textContent = currentLang === 'es' ? 'Buscando jugador...' : 'Searching...';
 
     try {
         const rankRes = await fetch(`/rank/${region}/${name}/${tag}`);
@@ -120,8 +121,13 @@ document.getElementById('rank-form').addEventListener('submit', async (e) => {
             mmrEl.textContent = mmrChange > 0 ? `+${mmrChange}` : mmrChange;
             mmrEl.style.color = mmrChange >= 0 ? 'var(--success)' : 'var(--danger)';
 
-            if (d.card && d.card.wide) {
-                document.getElementById('player-card-bg').style.backgroundImage = `url('${d.card.wide}')`;
+            if (d.card) {
+                if (d.card.wide) {
+                    document.getElementById('player-card-bg').style.backgroundImage = `url('${d.card.wide}')`;
+                }
+                if (d.card.small) {
+                    document.getElementById('player-card-small').src = d.card.small;
+                }
             }
 
             const matchRes = await fetch(`/match/last/${region}/${name}/${tag}`);
