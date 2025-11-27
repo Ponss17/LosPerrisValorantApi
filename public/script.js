@@ -175,6 +175,12 @@ document.getElementById('rank-form').addEventListener('submit', async (e) => {
                 resultEl.className = `match-result ${isWin ? 'win' : 'loss'}`;
 
                 document.getElementById('match-kda').textContent = `${stats.stats.kills}/${stats.stats.deaths}/${stats.stats.assists}`;
+
+                // Populate Agent and HS%
+                if (m.derived) {
+                    document.getElementById('match-hs').textContent = `${m.derived.hs_percent}%`;
+                    document.getElementById('match-agent-icon').src = m.derived.agent_icon;
+                }
             }
 
             updateCommands();

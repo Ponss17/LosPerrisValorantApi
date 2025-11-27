@@ -20,10 +20,11 @@ router.get('/last/:region/:name/:tag', async (req, res) => {
         if (matchesData.status === 200 && matchesData.data.length > 0) {
             const lastMatch = matchesData.data[0];
 
+            const stats = lastMatch.players.all_players.find(p => p.puuid === puuid);
+
             if (req.query.format === 'text') {
                 const lang = req.query.lang || 'en';
                 const meta = lastMatch.metadata;
-                const stats = lastMatch.players.all_players.find(p => p.puuid === puuid);
                 const isWin = lastMatch.teams.red.has_won ? (stats.team === 'Red') : (stats.team === 'Blue');
 
                 const resultEn = isWin ? 'Win' : 'Loss';
@@ -38,9 +39,24 @@ router.get('/last/:region/:name/:tag', async (req, res) => {
                 }
             }
 
+            // Calculate HS%
+            const totalShots = (stats.stats.headshots || 0) + (stats.stats.bodyshots || 0) + (stats.stats.legshots || 0);
+            const hsPercentage = totalShots > 0 ? ((stats.stats.headshots / totalShots) * 100).toFixed(1) : 0;
+
+            // Agent Info
+            const agentName = stats.character;
+            const agentIcon = stats.assets.agent.small;
+
             res.json({
                 status: 200,
-                data: lastMatch
+                data: {
+                    ...lastMatch,
+                    derived: {
+                        hs_percent: hsPercentage,
+                        agent_name: agentName,
+                        agent_icon: agentIcon
+                    }
+                }
             });
         } else {
             if (req.query.format === 'text') {
