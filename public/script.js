@@ -9,9 +9,10 @@ const translations = {
         lastMatch: 'Last Match',
         error: 'Player not found',
         botConfig: 'Bot Configuration',
+        botPlatform: 'Platform',
         botLang: 'Bot Language',
         rankFormat: 'Rank Format',
-        nightbotCmds: 'Nightbot Commands',
+        botCmds: 'Bot Commands',
         format1: 'Rank Only',
         format2: 'Rank + RR',
         format3: 'Rank + RR + ELO'
@@ -26,9 +27,10 @@ const translations = {
         lastMatch: 'Última Partida',
         error: 'Jugador no encontrado',
         botConfig: 'Configuración del Bot',
+        botPlatform: 'Plataforma',
         botLang: 'Idioma del Bot',
         rankFormat: 'Formato de Rango',
-        nightbotCmds: 'Comandos Nightbot',
+        botCmds: 'Comandos del Bot',
         format1: 'Solo Rango',
         format2: 'Rango + Puntos',
         format3: 'Rango + Puntos + ELO'
@@ -69,6 +71,7 @@ function updateLanguage() {
     document.getElementById('error-msg').textContent = t.error;
 
     document.querySelector('.config-card h3').textContent = t.botConfig;
+    document.querySelector('label[for="bot-platform"]').textContent = t.botPlatform;
     document.querySelector('label[for="bot-lang"]').textContent = t.botLang;
     document.querySelector('label[for="bot-type"]').textContent = t.rankFormat;
     const typeSelect = document.getElementById('bot-type');
@@ -76,7 +79,22 @@ function updateLanguage() {
     typeSelect.options[1].text = t.format2;
     typeSelect.options[2].text = t.format3;
 
-    document.querySelector('.commands-card h3').textContent = t.nightbotCmds;
+    document.querySelector('.commands-card h3').textContent = t.botCmds;
+}
+
+function getCommandSyntax(platform, url) {
+    switch (platform) {
+        case 'nightbot':
+            return `$(urlfetch ${url})`;
+        case 'streamelements':
+            return `\${customapi.${url}}`;
+        case 'fossabot':
+            return `$(customapi ${url})`;
+        case 'streamlabs':
+            return `{readapi.${url}}`;
+        default:
+            return url;
+    }
 }
 
 function updateCommands() {
@@ -86,18 +104,20 @@ function updateCommands() {
     const name = document.getElementById('name').value;
     const tag = document.getElementById('tag').value;
 
+    const botPlatform = document.getElementById('bot-platform').value;
     const botLang = document.getElementById('bot-lang').value;
     const botType = document.getElementById('bot-type').value;
 
     const baseUrl = window.location.origin + apiBase;
 
-    const rankCmd = `$(urlfetch ${baseUrl}/rank/${region}/${name}/${tag}?format=text&lang=${botLang}&type=${botType})`;
-    document.getElementById('cmd-rank').value = rankCmd;
+    const rankUrl = `${baseUrl}/rank/${region}/${name}/${tag}?format=text&lang=${botLang}&type=${botType}`;
+    const matchUrl = `${baseUrl}/match/last/${region}/${name}/${tag}?format=text&lang=${botLang}`;
 
-    const matchCmd = `$(urlfetch ${baseUrl}/match/last/${region}/${name}/${tag}?format=text&lang=${botLang})`;
-    document.getElementById('cmd-match').value = matchCmd;
+    document.getElementById('cmd-rank').value = getCommandSyntax(botPlatform, rankUrl);
+    document.getElementById('cmd-match').value = getCommandSyntax(botPlatform, matchUrl);
 }
 
+document.getElementById('bot-platform').addEventListener('change', updateCommands);
 document.getElementById('bot-lang').addEventListener('change', updateCommands);
 document.getElementById('bot-type').addEventListener('change', updateCommands);
 

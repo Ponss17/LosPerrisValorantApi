@@ -88,6 +88,15 @@
                     <h3>Configuración del Bot</h3>
                     <div class="form-row">
                         <div class="form-group">
+                            <label for="bot-platform">Plataforma</label>
+                            <select id="bot-platform">
+                                <option value="nightbot">Nightbot</option>
+                                <option value="streamelements">StreamElements</option>
+                                <option value="fossabot">Fossabot</option>
+                                <option value="streamlabs">Streamlabs</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
                             <label for="bot-lang">Idioma del Bot</label>
                             <select id="bot-lang">
                                 <option value="es">Español</option>
@@ -106,7 +115,7 @@
                 </section>
 
                 <section class="card commands-card">
-                    <h3>Comandos Nightbot</h3>
+                    <h3>Comandos del Bot</h3>
                     <div class="command-item">
                         <label>!rank</label>
                         <div class="copy-box">
@@ -127,6 +136,7 @@
             <div id="error" class="hidden">
                 <p id="error-msg">Jugador no encontrado</p>
             </div>
+
             <section class="card docs-card">
                 <h3>API Documentation</h3>
                 <div class="doc-item">
@@ -151,10 +161,8 @@
                     Followage API</a></p>
             <p class="disclaimer">La API de Valorant de LosPerris no cuenta con el respaldo de Riot Games y no refleja
                 las opiniones ni los puntos de vista de Riot Games ni de ninguna persona involucrada oficialmente en la
-                producción o gestión de propiedades de Riot Games.
-                Riot Games y todas las propiedades asociadas son marcas comerciales o marcas registradas de Riot Games,
-                Inc.
-            </p>
+                producción o gestión de propiedades de Riot Games. Riot Games y todas las propiedades asociadas son
+                marcas comerciales o marcas registradas de Riot Games, Inc.</p>
         </footer>
     </div>
     <script src="script.js"></script>
