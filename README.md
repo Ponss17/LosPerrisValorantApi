@@ -1,9 +1,13 @@
-# LosPerris Valorant Api
+# LosPerris - Valorant Api
 
 **Tu Hub definitivo para comandos de Valorant.**
 Diseñado para streamers, esta herramienta te permite generar comandos personalizados para tu chat (Nightbot, StreamElements, etc.) sin tocar una sola línea de código.
 
-![Preview](public/imgs/LosPerris-gamer.ico)
+## ✨ Novedades
+- **Diseño Premium**: Nueva interfaz oscura inspirada en Valorant.
+- **Traducción de Rangos**: Los nombres de los rangos se traducen automáticamente (ej. "Gold" -> "Oro").
+- **Historial de MMR**: Gráfico interactivo para ver tu progreso de ELO en las últimas partidas.
+- **Fecha de Partida**: Ahora puedes ver cuándo se jugó la última partida.
 
 ## 🚀 Cómo Usar (Web)
 
@@ -11,15 +15,16 @@ No necesitas instalar nada. Todo funciona desde la web.
 
 ### 1. Busca tu Perfil
 Ingresa tu **Riot ID** y **Tag** (ej. `PonssLoveless #8882`) y selecciona tu región.
-- Verás tu **Rango Actual** con tu ELO y RR.
-- Verás tu **Última Partida** con el resultado y KDA.
+- Verás tu **Rango Actual** con tu ELO y RR (traducido a tu idioma).
+- Verás tu **Última Partida** con el resultado, KDA, HS% y la fecha.
+- Verás un **Gráfico** con tu historial de MMR.
 
 ### 2. Configura tu Bot
 Una vez carguen tus datos, baja a la sección **"Configuración del Bot"**.
 Aquí puedes personalizar cómo quieres que responda el bot en tu chat:
 
 - **Plataforma**: Elige tu bot (Nightbot, StreamElements, Fossabot, Streamlabs).
-- **Idioma**: ¿Tu stream es en Español o Inglés?
+- **Idioma**: ¿Tu stream es en Español o Inglés? (Esto afecta la respuesta del bot).
 - **Formato de Rango**:
     - *Solo Rango*: "Gold 1"
     - *Rango + Puntos*: "Gold 1 - 50 RR"
@@ -52,6 +57,10 @@ Si eres dev y quieres usar la API directamente, aquí tienes los endpoints:
 ### Última Partida
 `GET /match/last/:region/:name/:tag`
 - `?format=text` (Opcional: respuesta en texto plano)
+
+### Historial
+`GET /history/:region/:name/:tag`
+- Devuelve el historial de MMR para gráficos.
 
 ---
 
