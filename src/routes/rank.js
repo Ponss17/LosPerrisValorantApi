@@ -1,13 +1,13 @@
 const express = require('express');
 const router = express.Router();
-const { getAccount, getMMRByPUUID } = require('../utils/henrikApi');
+const { getPUUID, getMMRByPUUID } = require('../utils/henrikApi');
 
 router.get('/:region/:name/:tag', async (req, res) => {
     const { region, name, tag } = req.params;
 
     try {
-        // Obtener Account para encontrar PUUID
-        const accountData = await getAccount(name, tag);
+        // Obtener PUUID (con caché)
+        const accountData = await getPUUID(name, tag);
 
         if (accountData.status !== 200) {
             return res.status(accountData.status).json(accountData);

@@ -64,4 +64,26 @@ async function getMatchesByPUUID(region, puuid, mode = 'competitive') {
     }
 }
 
-module.exports = { getAccount, getMMRByPUUID, getMatchesByPUUID };
+const cache = require('./cache');
+
+async function getPUUID(name, tag) {
+    const cacheKey = `puuid:${name.toLowerCase()}:${tag.toLowerCase()}`;
+    const cachedPUUID = cache.get(cacheKey);
+
+    if (cachedPUUID) {
+        return { status: 200, data: { puuid: cachedPUUID, name, tag } };
+    }
+
+    try {
+        const accountData = await getAccount(name, tag);
+        if (accountData.status === 200) {
+            cache.set(cacheKey, accountData.data.puuid);
+            return accountData;
+        }
+        return accountData;
+    } catch (error) {
+        throw error;
+    }
+}
+
+module.exports = { getAccount, getMMRByPUUID, getMatchesByPUUID, getPUUID };

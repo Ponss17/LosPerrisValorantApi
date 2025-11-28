@@ -1,12 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const { getAccount, getMatchesByPUUID } = require('../utils/henrikApi');
+const { getPUUID, getMatchesByPUUID } = require('../utils/henrikApi');
 
 router.get('/last/:region/:name/:tag', async (req, res) => {
     const { region, name, tag } = req.params;
 
     try {
-        const accountData = await getAccount(name, tag);
+        const accountData = await getPUUID(name, tag);
 
         if (accountData.status !== 200) {
             return res.status(accountData.status).json(accountData);
