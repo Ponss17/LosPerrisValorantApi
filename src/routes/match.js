@@ -6,7 +6,6 @@ router.get('/last/:region/:name/:tag', async (req, res) => {
     const { region, name, tag } = req.params;
 
     try {
-        // Obtener la cuenta para encontrar el PUUID
         const accountData = await getAccount(name, tag);
 
         if (accountData.status !== 200) {
@@ -22,7 +21,6 @@ router.get('/last/:region/:name/:tag', async (req, res) => {
 
             const stats = lastMatch.players.all_players.find(p => p.puuid === puuid);
 
-            // Calculate HS%
             const totalShots = (stats.stats.headshots || 0) + (stats.stats.bodyshots || 0) + (stats.stats.legshots || 0);
             const hsPercentage = totalShots > 0 ? ((stats.stats.headshots / totalShots) * 100).toFixed(1) : 0;
 
@@ -39,36 +37,32 @@ router.get('/last/:region/:name/:tag', async (req, res) => {
                 const kda = `${stats.stats.kills}/${stats.stats.deaths}/${stats.stats.assists}`;
                 const map = meta.map;
 
-                // Type 1: Map + Result
                 if (type === '1') {
                     return res.send(lang === 'es'
                         ? `Última Partida: ${map} - ${result}`
                         : `Last Match: ${map} - ${result}`);
                 }
 
-                // Type 2: Map + Result + KDA
                 if (type === '2') {
                     return res.send(lang === 'es'
                         ? `Última Partida: ${map} - ${result} (${kda})`
                         : `Last Match: ${map} - ${result} (${kda})`);
                 }
 
-                // Type 3: Map + Result + KDA + HS%
                 if (type === '3') {
                     return res.send(lang === 'es'
                         ? `Última Partida: ${map} - ${result} (${kda} - ${hsPercentage}% HS)`
                         : `Last Match: ${map} - ${result} (${kda} - ${hsPercentage}% HS)`);
                 }
 
-                // Default (same as Type 2)
                 return res.send(lang === 'es'
                     ? `Última Partida: ${map} - ${result} (${kda})`
                     : `Last Match: ${map} - ${result} (${kda})`);
             }
 
-            // Agent Info
             const agentName = stats.character;
             const agentIcon = stats.assets.agent.small;
+            const agentImage = stats.assets.agent.bust || stats.assets.agent.full || agentIcon;
 
             res.json({
                 status: 200,
@@ -77,7 +71,8 @@ router.get('/last/:region/:name/:tag', async (req, res) => {
                     derived: {
                         hs_percent: hsPercentage,
                         agent_name: agentName,
-                        agent_icon: agentIcon
+                        agent_icon: agentIcon,
+                        agent_image: agentImage
                     }
                 }
             });

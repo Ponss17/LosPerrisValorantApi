@@ -51,9 +51,8 @@ const translations = {
 
 let currentLang = 'es';
 let currentData = null;
-let currentConfigMode = 'rank'; // 'rank' or 'match'
+let currentConfigMode = 'rank';
 
-// Determine base URL for API requests
 const getBaseUrl = () => {
     const path = window.location.pathname;
     if (path.startsWith('/valorantapi')) {
@@ -72,7 +71,6 @@ document.querySelectorAll('.lang-btn').forEach(btn => {
     });
 });
 
-// Config Toggle Logic
 document.getElementById('btn-config-rank').addEventListener('click', () => {
     setConfigMode('rank');
 });
@@ -84,11 +82,9 @@ document.getElementById('btn-config-match').addEventListener('click', () => {
 function setConfigMode(mode) {
     currentConfigMode = mode;
 
-    // Update Buttons
     document.getElementById('btn-config-rank').classList.toggle('active', mode === 'rank');
     document.getElementById('btn-config-match').classList.toggle('active', mode === 'match');
 
-    // Show/Hide Form Groups
     const rankGroup = document.getElementById('group-rank-format');
     const matchGroup = document.getElementById('group-match-format');
 
@@ -168,8 +164,6 @@ function updateCommands() {
     const rankUrl = `${baseUrl}/rank/${region}/${name}/${tag}?format=text&lang=${botLang}&type=${botType}`;
     const matchUrl = `${baseUrl}/match/last/${region}/${name}/${tag}?format=text&lang=${botLang}&type=${botMatchType}`;
 
-    // Update both inputs but maybe highlight the relevant one? 
-    // For now, just update both. The user sees the toggle above so they know what they are configuring.
     document.getElementById('cmd-rank').value = getCommandSyntax(botPlatform, rankUrl);
     document.getElementById('cmd-match').value = getCommandSyntax(botPlatform, matchUrl);
 }
@@ -209,6 +203,9 @@ document.getElementById('rank-form').addEventListener('submit', async (e) => {
             mmrEl.textContent = mmrChange > 0 ? `+${mmrChange}` : mmrChange;
             mmrEl.style.color = mmrChange >= 0 ? 'var(--success)' : 'var(--danger)';
 
+            const rr = d.ranking_in_tier || 0;
+            document.getElementById('rank-progress').style.width = `${rr}%`;
+
             if (d.card) {
                 if (d.card.wide) {
                     document.getElementById('player-card-bg').style.backgroundImage = `url('${d.card.wide}')`;
@@ -234,16 +231,24 @@ document.getElementById('rank-form').addEventListener('submit', async (e) => {
 
                 document.getElementById('match-kda').textContent = `${stats.stats.kills}/${stats.stats.deaths}/${stats.stats.assists}`;
 
-                // Populate Agent and HS%
                 if (m.derived) {
                     document.getElementById('match-hs').textContent = `${m.derived.hs_percent}%`;
                     document.getElementById('match-agent-icon').src = m.derived.agent_icon;
+
+                    if (m.derived.agent_image) {
+                        document.querySelector('.match-card').style.setProperty('--match-bg', `url('${m.derived.agent_image}')`);
+                    }
                 }
             }
 
             updateCommands();
 
-            document.getElementById('result').classList.remove('hidden');
+            const resultContainer = document.getElementById('result');
+            resultContainer.classList.remove('hidden');
+            resultContainer.classList.remove('fade-in');
+            void resultContainer.offsetWidth;
+            resultContainer.classList.add('fade-in');
+
             document.getElementById('error').classList.add('hidden');
         } else {
             throw new Error('Player not found');

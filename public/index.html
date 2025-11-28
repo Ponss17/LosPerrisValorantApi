@@ -14,6 +14,7 @@
 </head>
 
 <body>
+
     <div class="lang-selector">
         <button class="lang-btn active" data-lang="es">ES</button>
         <button class="lang-btn" data-lang="en">EN</button>
@@ -54,6 +55,7 @@
             </section>
 
             <div id="result" class="hidden">
+
                 <section class="card rank-card" id="player-card-bg">
                     <div class="overlay"></div>
                     <div class="card-content">
@@ -65,6 +67,9 @@
                             <div class="stats">
                                 <span><i class="icon-elo"></i> <span id="elo">1200</span> ELO</span>
                                 <span id="mmr-change" class="mmr-change">+15</span>
+                            </div>
+                            <div class="rank-progress-container">
+                                <div id="rank-progress" class="rank-progress-fill"></div>
                             </div>
                         </div>
                     </div>
@@ -96,7 +101,6 @@
                 <section class="card config-card">
                     <h3>Configuración del Bot</h3>
 
-                    <!-- Toggle Switch -->
                     <div class="config-toggle-container">
                         <button id="btn-config-rank" class="toggle-btn active">RANGO</button>
                         <button id="btn-config-match" class="toggle-btn">PARTIDA</button>
@@ -120,7 +124,6 @@
                             </select>
                         </div>
 
-                        <!-- Rank Format (Visible by default) -->
                         <div class="form-group" id="group-rank-format">
                             <label for="bot-type">Formato de Rango</label>
                             <select id="bot-type">
@@ -130,7 +133,6 @@
                             </select>
                         </div>
 
-                        <!-- Match Format (Hidden by default) -->
                         <div class="form-group hidden" id="group-match-format">
                             <label for="bot-match-type">Formato de Partida</label>
                             <select id="bot-match-type">
@@ -193,6 +195,7 @@
                 marcas comerciales o marcas registradas de Riot Games, Inc.</p>
         </footer>
     </div>
+
     <script src="/valorantapi/script.js"></script>
 </body>
 

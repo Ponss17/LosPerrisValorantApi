@@ -1,10 +1,10 @@
 :root {
     --bg-color: #0f1923;
-    --card-bg: #1f2731;
-    --accent-color: #ff4655;
+    --card-bg: rgba(255, 255, 255, 0.05);
     --text-color: #ece8e1;
-    --text-muted: #768079;
-    --success: #00ffbc;
+    --text-muted: #8b9bb4;
+    --accent-color: #ff4655;
+    --success: #00ff9d;
     --danger: #ff4655;
     --font-main: 'Roboto', sans-serif;
     --font-header: 'Oswald', sans-serif;
@@ -20,15 +20,26 @@ body {
     font-family: var(--font-main);
     background-color: var(--bg-color);
     color: var(--text-color);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    background-image: url('https://media.valorant-api.com/maps/2c9d57ec-4431-9c5e-2939-8f9ef6dd5cba/splash.png');
+    background-image: url('/valorantapi/imgs/vlr-bg.jpg');
     background-size: cover;
     background-position: center;
-    background-blend-mode: multiply;
-    padding: 2rem;
+    background-attachment: fixed;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+}
+
+body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(15, 25, 35, 0.92);
+    z-index: -1;
 }
 
 .lang-selector {
@@ -51,14 +62,15 @@ body {
 
 .lang-btn.active,
 .lang-btn:hover {
+    background: var(--accent-color);
+    color: white;
     border-color: var(--accent-color);
-    color: var(--accent-color);
 }
 
 .main-container {
     width: 100%;
     max-width: 800px;
-    margin-top: 40px;
+    padding: 40px 20px;
 }
 
 header {
@@ -70,7 +82,6 @@ h1 {
     font-family: var(--font-header);
     font-size: 3rem;
     letter-spacing: 2px;
-    margin-bottom: 0.5rem;
 }
 
 .accent {
@@ -79,10 +90,8 @@ h1 {
 
 #subtitle {
     color: var(--text-muted);
-    font-size: 0.9rem;
-    text-transform: uppercase;
-    letter-spacing: 1px;
     margin-top: 10px;
+    font-size: 1.1rem;
 }
 
 .grid-layout {
@@ -93,17 +102,11 @@ h1 {
 
 .card {
     background: var(--card-bg);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    padding: 25px;
     border-radius: 8px;
-    padding: 20px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-    border: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-/* Search Form */
-.search-card form {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
 
 .form-row {
@@ -112,79 +115,81 @@ h1 {
 }
 
 .form-group {
+    flex: 1;
     display: flex;
     flex-direction: column;
-    flex: 1;
+    margin-bottom: 15px;
 }
 
 label {
     font-size: 0.8rem;
+    text-transform: uppercase;
     color: var(--text-muted);
     margin-bottom: 5px;
-    text-transform: uppercase;
     font-weight: bold;
 }
 
 input,
 select {
-    background: #0f1923;
-    border: 1px solid var(--text-muted);
-    color: white;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     padding: 12px;
+    color: white;
     border-radius: 4px;
     font-family: var(--font-main);
     font-size: 1rem;
+    outline: none;
     transition: 0.3s;
 }
 
 input:focus,
 select:focus {
     border-color: var(--accent-color);
-    outline: none;
 }
 
 .btn-primary {
+    width: 100%;
+    padding: 15px;
     background: var(--accent-color);
     color: white;
     border: none;
-    padding: 15px;
     font-weight: bold;
+    font-size: 1.1rem;
     cursor: pointer;
     text-transform: uppercase;
     letter-spacing: 1px;
     transition: 0.3s;
-    margin-top: 10px;
+    border-radius: 4px;
 }
 
 .btn-primary:hover {
-    background: #d93644;
+    background: #ff2b3d;
+    transform: translateY(-2px);
 }
 
 .btn-primary:disabled {
     opacity: 0.7;
     cursor: not-allowed;
+    transform: none;
 }
 
-/* Rank Card */
 .rank-card {
     position: relative;
     overflow: hidden;
-    min-height: 128px;
+    min-height: 180px;
     display: flex;
     align-items: center;
     background-size: cover;
     background-position: center;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
 }
 
-.overlay {
+.rank-card .overlay {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, rgba(15, 25, 35, 1) 0%, rgba(15, 25, 35, 0.8) 50%, rgba(15, 25, 35, 0.4) 100%);
+    background: rgba(15, 25, 35, 0.85);
     z-index: 1;
 }
 
@@ -193,36 +198,41 @@ select:focus {
     z-index: 2;
     display: flex;
     align-items: center;
-    gap: 25px;
+    gap: 20px;
     width: 100%;
-    padding-left: 10px;
 }
 
 .player-card-small {
-    width: 80px;
-    height: 80px;
-    border-radius: 4px;
-    border: 2px solid rgba(255, 255, 255, 0.2);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: 2px solid var(--accent-color);
     object-fit: cover;
 }
 
 .rank-icon {
-    width: 70px;
-    height: 70px;
-    filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.5));
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+}
+
+.info {
+    flex: 1;
 }
 
 .info h2 {
     font-family: var(--font-header);
-    font-size: 1.5rem;
+    font-size: 2rem;
     margin-bottom: 5px;
 }
 
 .rank-badge {
-    color: var(--accent-color);
+    background: var(--accent-color);
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.9rem;
     font-weight: bold;
-    font-size: 1.2rem;
     margin-bottom: 5px;
 }
 
@@ -234,10 +244,48 @@ select:focus {
 }
 
 .mmr-change {
-    color: var(--success);
+    font-weight: bold;
 }
 
-/* Match Card */
+.rank-progress-container {
+    width: 100%;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+    margin-top: 10px;
+    overflow: hidden;
+}
+
+.rank-progress-fill {
+    height: 100%;
+    background: var(--accent-color);
+    width: 0%;
+    transition: width 1s ease-out;
+    box-shadow: 0 0 10px rgba(255, 70, 85, 0.5);
+}
+
+.match-card {
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.match-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: var(--match-bg);
+    background-size: cover;
+    background-position: center 20%;
+    opacity: 0.15;
+    z-index: -1;
+    transition: background-image 0.5s ease;
+    filter: grayscale(100%);
+}
+
 .match-card h3 {
     font-family: var(--font-header);
     margin-bottom: 15px;
@@ -246,9 +294,6 @@ select:focus {
 }
 
 .match-details {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
     background: rgba(0, 0, 0, 0.2);
     padding: 15px;
     border-radius: 4px;
@@ -256,34 +301,37 @@ select:focus {
 
 .match-header {
     display: flex;
-    flex-direction: column;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 10px;
 }
 
 .map-name {
     font-weight: bold;
-    font-size: 1.1rem;
+    font-size: 1.2rem;
 }
 
 .match-result {
-    font-size: 0.9rem;
     font-weight: bold;
+    padding: 2px 8px;
+    border-radius: 4px;
 }
 
 .match-result.win {
     color: var(--success);
+    background: rgba(0, 255, 157, 0.1);
 }
 
 .match-result.loss {
     color: var(--danger);
+    background: rgba(255, 70, 85, 0.1);
 }
 
-/* Match Stats Row */
 .match-stats-row {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    margin-top: 15px;
-    gap: 15px;
+    justify-content: space-around;
 }
 
 .agent-icon {
@@ -292,7 +340,6 @@ select:focus {
     border-radius: 50%;
     border: 2px solid var(--accent-color);
     object-fit: cover;
-    box-shadow: 0 0 10px rgba(255, 70, 85, 0.3);
 }
 
 .stat-group {
@@ -311,10 +358,8 @@ select:focus {
 .stat-value {
     font-size: 1.5rem;
     font-weight: 700;
-    color: var(--text-color);
 }
 
-/* Config Toggle */
 .config-toggle-container {
     display: flex;
     background: rgba(0, 0, 0, 0.3);
@@ -345,7 +390,6 @@ select:focus {
     color: white;
 }
 
-/* Config & Commands */
 .config-card h3,
 .commands-card h3 {
     font-family: var(--font-header);
@@ -389,7 +433,6 @@ select:focus {
     background: #ddd;
 }
 
-/* Docs */
 .docs-card h3 {
     font-family: var(--font-header);
     margin-bottom: 20px;
@@ -436,7 +479,6 @@ select:focus {
     font-family: monospace;
 }
 
-/* Utilities */
 .hidden {
     display: none;
 }
@@ -477,6 +519,22 @@ footer a {
     margin-right: auto;
 }
 
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in {
+    animation: fadeUp 0.6s ease-out forwards;
+}
+
 @media (max-width: 600px) {
     .rank-card {
         min-height: auto;
@@ -486,7 +544,6 @@ footer a {
     .card-content {
         flex-direction: column;
         text-align: center;
-        padding-left: 0;
     }
 
     .form-row {
