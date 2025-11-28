@@ -12,10 +12,16 @@ const translations = {
         botPlatform: 'Platform',
         botLang: 'Bot Language',
         rankFormat: 'Rank Format',
+        matchFormat: 'Match Format',
         botCmds: 'Bot Commands',
         format1: 'Rank Only',
         format2: 'Rank + RR',
-        format3: 'Rank + RR + ELO'
+        format3: 'Rank + RR + ELO',
+        matchType1: 'Map + Result',
+        matchType2: 'Map + Result + KDA',
+        matchType3: 'Map + Result + KDA + HS%',
+        rankConfig: 'RANK',
+        matchConfig: 'MATCH'
     },
     es: {
         title: 'LOSPERRIS <span class="accent">VALORANT API</span>',
@@ -30,15 +36,22 @@ const translations = {
         botPlatform: 'Plataforma',
         botLang: 'Idioma del Bot',
         rankFormat: 'Formato de Rango',
+        matchFormat: 'Formato de Partida',
         botCmds: 'Comandos del Bot',
         format1: 'Solo Rango',
         format2: 'Rango + Puntos',
-        format3: 'Rango + Puntos + ELO'
+        format3: 'Rango + Puntos + ELO',
+        matchType1: 'Mapa + Resultado',
+        matchType2: 'Mapa + Resultado + KDA',
+        matchType3: 'Mapa + Resultado + KDA + HS%',
+        rankConfig: 'RANGO',
+        matchConfig: 'PARTIDA'
     }
 };
 
 let currentLang = 'es';
 let currentData = null;
+let currentConfigMode = 'rank'; // 'rank' or 'match'
 
 // Determine base URL for API requests
 const getBaseUrl = () => {
@@ -59,6 +72,37 @@ document.querySelectorAll('.lang-btn').forEach(btn => {
     });
 });
 
+// Config Toggle Logic
+document.getElementById('btn-config-rank').addEventListener('click', () => {
+    setConfigMode('rank');
+});
+
+document.getElementById('btn-config-match').addEventListener('click', () => {
+    setConfigMode('match');
+});
+
+function setConfigMode(mode) {
+    currentConfigMode = mode;
+
+    // Update Buttons
+    document.getElementById('btn-config-rank').classList.toggle('active', mode === 'rank');
+    document.getElementById('btn-config-match').classList.toggle('active', mode === 'match');
+
+    // Show/Hide Form Groups
+    const rankGroup = document.getElementById('group-rank-format');
+    const matchGroup = document.getElementById('group-match-format');
+
+    if (mode === 'rank') {
+        rankGroup.classList.remove('hidden');
+        matchGroup.classList.add('hidden');
+    } else {
+        rankGroup.classList.add('hidden');
+        matchGroup.classList.remove('hidden');
+    }
+
+    updateCommands();
+}
+
 function updateLanguage() {
     const t = translations[currentLang];
     document.getElementById('title').innerHTML = t.title;
@@ -73,11 +117,21 @@ function updateLanguage() {
     document.querySelector('.config-card h3').textContent = t.botConfig;
     document.querySelector('label[for="bot-platform"]').textContent = t.botPlatform;
     document.querySelector('label[for="bot-lang"]').textContent = t.botLang;
+
     document.querySelector('label[for="bot-type"]').textContent = t.rankFormat;
     const typeSelect = document.getElementById('bot-type');
     typeSelect.options[0].text = t.format1;
     typeSelect.options[1].text = t.format2;
     typeSelect.options[2].text = t.format3;
+
+    document.querySelector('label[for="bot-match-type"]').textContent = t.matchFormat;
+    const matchTypeSelect = document.getElementById('bot-match-type');
+    matchTypeSelect.options[0].text = t.matchType1;
+    matchTypeSelect.options[1].text = t.matchType2;
+    matchTypeSelect.options[2].text = t.matchType3;
+
+    document.getElementById('btn-config-rank').textContent = t.rankConfig;
+    document.getElementById('btn-config-match').textContent = t.matchConfig;
 
     document.querySelector('.commands-card h3').textContent = t.botCmds;
 }
@@ -107,12 +161,15 @@ function updateCommands() {
     const botPlatform = document.getElementById('bot-platform').value;
     const botLang = document.getElementById('bot-lang').value;
     const botType = document.getElementById('bot-type').value;
+    const botMatchType = document.getElementById('bot-match-type').value;
 
     const baseUrl = window.location.origin + apiBase;
 
     const rankUrl = `${baseUrl}/rank/${region}/${name}/${tag}?format=text&lang=${botLang}&type=${botType}`;
-    const matchUrl = `${baseUrl}/match/last/${region}/${name}/${tag}?format=text&lang=${botLang}`;
+    const matchUrl = `${baseUrl}/match/last/${region}/${name}/${tag}?format=text&lang=${botLang}&type=${botMatchType}`;
 
+    // Update both inputs but maybe highlight the relevant one? 
+    // For now, just update both. The user sees the toggle above so they know what they are configuring.
     document.getElementById('cmd-rank').value = getCommandSyntax(botPlatform, rankUrl);
     document.getElementById('cmd-match').value = getCommandSyntax(botPlatform, matchUrl);
 }
@@ -120,6 +177,7 @@ function updateCommands() {
 document.getElementById('bot-platform').addEventListener('change', updateCommands);
 document.getElementById('bot-lang').addEventListener('change', updateCommands);
 document.getElementById('bot-type').addEventListener('change', updateCommands);
+document.getElementById('bot-match-type').addEventListener('change', updateCommands);
 
 document.getElementById('rank-form').addEventListener('submit', async (e) => {
     e.preventDefault();

@@ -22,26 +22,49 @@ router.get('/last/:region/:name/:tag', async (req, res) => {
 
             const stats = lastMatch.players.all_players.find(p => p.puuid === puuid);
 
+            // Calculate HS%
+            const totalShots = (stats.stats.headshots || 0) + (stats.stats.bodyshots || 0) + (stats.stats.legshots || 0);
+            const hsPercentage = totalShots > 0 ? ((stats.stats.headshots / totalShots) * 100).toFixed(1) : 0;
+
             if (req.query.format === 'text') {
                 const lang = req.query.lang || 'en';
+                const type = req.query.type || '1';
                 const meta = lastMatch.metadata;
                 const isWin = lastMatch.teams.red.has_won ? (stats.team === 'Red') : (stats.team === 'Blue');
 
                 const resultEn = isWin ? 'Win' : 'Loss';
                 const resultEs = isWin ? 'Victoria' : 'Derrota';
+                const result = lang === 'es' ? resultEs : resultEn;
 
                 const kda = `${stats.stats.kills}/${stats.stats.deaths}/${stats.stats.assists}`;
+                const map = meta.map;
 
-                if (lang === 'es') {
-                    return res.send(`Última Partida: ${meta.map} - ${resultEs} (${kda})`);
-                } else {
-                    return res.send(`Last Match: ${meta.map} - ${resultEn} (${kda})`);
+                // Type 1: Map + Result
+                if (type === '1') {
+                    return res.send(lang === 'es'
+                        ? `Última Partida: ${map} - ${result}`
+                        : `Last Match: ${map} - ${result}`);
                 }
-            }
 
-            // Calculate HS%
-            const totalShots = (stats.stats.headshots || 0) + (stats.stats.bodyshots || 0) + (stats.stats.legshots || 0);
-            const hsPercentage = totalShots > 0 ? ((stats.stats.headshots / totalShots) * 100).toFixed(1) : 0;
+                // Type 2: Map + Result + KDA
+                if (type === '2') {
+                    return res.send(lang === 'es'
+                        ? `Última Partida: ${map} - ${result} (${kda})`
+                        : `Last Match: ${map} - ${result} (${kda})`);
+                }
+
+                // Type 3: Map + Result + KDA + HS%
+                if (type === '3') {
+                    return res.send(lang === 'es'
+                        ? `Última Partida: ${map} - ${result} (${kda} - ${hsPercentage}% HS)`
+                        : `Last Match: ${map} - ${result} (${kda} - ${hsPercentage}% HS)`);
+                }
+
+                // Default (same as Type 2)
+                return res.send(lang === 'es'
+                    ? `Última Partida: ${map} - ${result} (${kda})`
+                    : `Last Match: ${map} - ${result} (${kda})`);
+            }
 
             // Agent Info
             const agentName = stats.character;

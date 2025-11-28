@@ -95,6 +95,13 @@
 
                 <section class="card config-card">
                     <h3>Configuración del Bot</h3>
+
+                    <!-- Toggle Switch -->
+                    <div class="config-toggle-container">
+                        <button id="btn-config-rank" class="toggle-btn active">RANGO</button>
+                        <button id="btn-config-match" class="toggle-btn">PARTIDA</button>
+                    </div>
+
                     <div class="form-row">
                         <div class="form-group">
                             <label for="bot-platform">Plataforma</label>
@@ -112,12 +119,24 @@
                                 <option value="en">English</option>
                             </select>
                         </div>
-                        <div class="form-group">
+
+                        <!-- Rank Format (Visible by default) -->
+                        <div class="form-group" id="group-rank-format">
                             <label for="bot-type">Formato de Rango</label>
                             <select id="bot-type">
                                 <option value="1">Solo Rango</option>
                                 <option value="2">Rango + Puntos</option>
                                 <option value="3">Rango + Puntos + ELO</option>
+                            </select>
+                        </div>
+
+                        <!-- Match Format (Hidden by default) -->
+                        <div class="form-group hidden" id="group-match-format">
+                            <label for="bot-match-type">Formato de Partida</label>
+                            <select id="bot-match-type">
+                                <option value="1">Mapa + Resultado</option>
+                                <option value="2">Mapa + Resultado + KDA</option>
+                                <option value="3">Mapa + Resultado + KDA + HS%</option>
                             </select>
                         </div>
                     </div>
