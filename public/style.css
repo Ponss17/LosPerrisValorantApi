@@ -248,11 +248,21 @@ select:focus {
 }
 
 .rank-card {
+    position: relative;
     display: flex;
     align-items: center;
-    min-height: 200px;
+    min-height: 220px;
     padding: 0;
     overflow: hidden;
+    border-radius: var(--border-radius);
+    background-size: cover;
+    background-position: center;
+    transition: transform 0.3s ease;
+}
+
+.rank-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
 }
 
 .rank-card .overlay {
@@ -261,7 +271,10 @@ select:focus {
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, rgba(15, 25, 35, 1) 0%, rgba(15, 25, 35, 0.9) 50%, rgba(15, 25, 35, 0.4) 100%);
+    background: linear-gradient(90deg,
+            rgba(15, 25, 35, 0.95) 0%,
+            rgba(15, 25, 35, 0.85) 45%,
+            rgba(15, 25, 35, 0.4) 100%);
     z-index: 1;
 }
 
@@ -270,48 +283,64 @@ select:focus {
     z-index: 2;
     display: flex;
     align-items: center;
-    gap: 30px;
+    gap: 25px;
     padding: 30px;
     width: 100%;
 }
 
 .player-card-small {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    border: 3px solid var(--accent-color);
-    box-shadow: 0 0 20px rgba(255, 70, 85, 0.3);
+    width: 90px;
+    height: 90px;
+    border-radius: 12px;
+    border: 2px solid var(--accent-color);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    object-fit: cover;
+    transform: rotate(-3deg);
+    transition: transform 0.3s ease;
+}
+
+.rank-card:hover .player-card-small {
+    transform: rotate(0deg) scale(1.05);
 }
 
 .rank-icon {
-    width: 100px;
-    height: 100px;
+    width: 80px;
+    height: 80px;
     object-fit: contain;
-    filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.5));
+    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.2));
 }
 
 .info {
     flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .info h2 {
     font-family: var(--font-header);
-    font-size: 2.5rem;
+    font-size: 2.8rem;
     line-height: 1;
-    margin-bottom: 8px;
+    margin-bottom: 5px;
     text-transform: uppercase;
+    text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.5);
+    letter-spacing: 1px;
 }
 
 .rank-badge {
-    display: inline-block;
-    background: var(--accent-color);
-    color: white;
-    padding: 4px 10px;
+    display: inline-flex;
+    align-items: center;
+    background: rgba(255, 70, 85, 0.1);
+    color: var(--accent-color);
+    border: 1px solid var(--accent-color);
+    padding: 4px 12px;
     font-weight: bold;
     font-size: 0.9rem;
     text-transform: uppercase;
     letter-spacing: 1px;
     margin-bottom: 10px;
+    align-self: flex-start;
+    border-radius: 2px;
 }
 
 .stats {
@@ -320,11 +349,20 @@ select:focus {
     color: var(--text-muted);
     font-size: 1rem;
     align-items: center;
+    font-weight: 500;
+}
+
+.stats i {
+    color: var(--accent-color);
+    margin-right: 5px;
 }
 
 .mmr-change {
     font-weight: bold;
     font-size: 1.1rem;
+    padding: 2px 6px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 4px;
 }
 
 .rank-progress-container {
