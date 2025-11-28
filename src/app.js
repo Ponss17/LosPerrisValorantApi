@@ -19,8 +19,7 @@ app.use(helmet({
             fontSrc: ["'self'", "https://fonts.gstatic.com"],
             imgSrc: ["'self'", "data:", "https://media.valorant-api.com"],
             connectSrc: ["'self'", "https://api.henrikdev.xyz"],
-            objectSrc: ["'none'"],
-            upgradeInsecureRequests: []
+            objectSrc: ["'none'"]
         }
     }
 }));
