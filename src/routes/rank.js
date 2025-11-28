@@ -53,6 +53,7 @@ router.get('/:region/:name/:tag', async (req, res) => {
                     rank_image: currentData.images.large,
                     elo: currentData.elo,
                     mmr_change: currentData.mmr_change_to_last_game,
+                    ranking_in_tier: currentData.ranking_in_tier,
                     card: accountData.data.card
                 }
             });
