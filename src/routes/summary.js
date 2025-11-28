@@ -1,0 +1,84 @@
+const express = require('express');
+const router = express.Router();
+const { getPUUID, getMMRByPUUID, getMatchesByPUUID, getMMRHistoryByPUUID } = require('../utils/henrikApi');
+
+router.get('/:region/:name/:tag', async (req, res) => {
+    const { region, name, tag } = req.params;
+
+    try {
+        const accountData = await getPUUID(name, tag);
+
+        if (accountData.status !== 200) {
+            return res.status(accountData.status).json(accountData);
+        }
+
+        const puuid = accountData.data.puuid;
+
+        const [mmrData, matchesData, historyData] = await Promise.all([
+            getMMRByPUUID(region, puuid),
+            getMatchesByPUUID(region, puuid, 'competitive'),
+            getMMRHistoryByPUUID(region, puuid)
+        ]);
+
+        const responseData = {
+            account: accountData.data,
+            rank: null,
+            match: null,
+            history: null
+        };
+
+        if (mmrData.status === 200) {
+            const currentData = mmrData.data.current_data;
+            responseData.rank = {
+                name: accountData.data.name,
+                tag: accountData.data.tag,
+                puuid: puuid,
+                region: region,
+                rank: currentData.currenttierpatched,
+                rank_image: currentData.images.large,
+                elo: currentData.elo,
+                mmr_change: currentData.mmr_change_to_last_game,
+                ranking_in_tier: currentData.ranking_in_tier,
+                card: accountData.data.card
+            };
+        }
+
+        if (matchesData.status === 200 && matchesData.data.length > 0) {
+            const lastMatch = matchesData.data[0];
+            const stats = lastMatch.players.all_players.find(p => p.puuid === puuid);
+
+            if (stats) {
+                const totalShots = (stats.stats.headshots || 0) + (stats.stats.bodyshots || 0) + (stats.stats.legshots || 0);
+                const hsPercentage = totalShots > 0 ? ((stats.stats.headshots / totalShots) * 100).toFixed(1) : 0;
+
+                const agentName = stats.character;
+                const agentIcon = stats.assets.agent.small;
+                const agentImage = stats.assets.agent.bust || stats.assets.agent.full || agentIcon;
+
+                responseData.match = {
+                    ...lastMatch,
+                    derived: {
+                        hs_percent: hsPercentage,
+                        agent_name: agentName,
+                        agent_icon: agentIcon,
+                        agent_image: agentImage
+                    }
+                };
+            }
+        }
+
+        if (historyData.status === 200) {
+            responseData.history = historyData.data;
+        }
+
+        res.json({
+            status: 200,
+            data: responseData
+        });
+
+    } catch (error) {
+        res.status(error.status || 500).json(error.data || { message: error.message });
+    }
+});
+
+module.exports = router;

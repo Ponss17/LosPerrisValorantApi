@@ -163,11 +163,11 @@ document.getElementById('rank-form').addEventListener('submit', async (e) => {
     submitBtn.textContent = currentLang === 'es' ? 'Buscando jugador...' : 'Searching...';
 
     try {
-        const rankRes = await fetch(`${apiBase}/rank/${region}/${name}/${tag}`);
-        const rankData = await rankRes.json();
+        const summaryRes = await fetch(`${apiBase}/summary/${region}/${name}/${tag}`);
+        const summaryData = await summaryRes.json();
 
-        if (rankRes.ok) {
-            const d = rankData.data;
+        if (summaryRes.ok) {
+            const d = summaryData.data.rank;
             currentData = d;
 
             document.getElementById('player-name').textContent = `${d.name}#${d.tag}`;
@@ -203,11 +203,8 @@ document.getElementById('rank-form').addEventListener('submit', async (e) => {
                 }
             }
 
-            const matchRes = await fetch(`${apiBase}/match/last/${region}/${name}/${tag}`);
-            const matchData = await matchRes.json();
-
-            if (matchRes.ok) {
-                const m = matchData.data;
+            if (summaryData.data.match) {
+                const m = summaryData.data.match;
                 const meta = m.metadata;
                 const stats = m.players.all_players.find(p => p.puuid === d.puuid);
                 const isWin = m.teams.red.has_won ? (stats.team === 'Red') : (stats.team === 'Blue');
@@ -234,15 +231,10 @@ document.getElementById('rank-form').addEventListener('submit', async (e) => {
                 }
             }
 
-            try {
-                const historyRes = await fetch(`${apiBase}/history/${region}/${name}/${tag}`);
-                const historyData = await historyRes.json();
-                if (historyRes.ok) {
-                    renderChart(historyData.data);
-                }
-            } catch (err) {
-                console.error('Error fetching history:', err);
+            if (summaryData.data.history) {
+                renderChart(summaryData.data.history);
             }
+
 
             updateCommands();
 

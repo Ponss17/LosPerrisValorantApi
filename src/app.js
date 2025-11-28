@@ -44,5 +44,6 @@ app.use(express.static(path.join(__dirname, '../public')));
 app.use('/rank', rankRoutes);
 app.use('/match', matchRoutes);
 app.use('/history', historyRoutes);
+app.use('/summary', require('./routes/summary'));
 
 module.exports = app;
