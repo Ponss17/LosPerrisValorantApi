@@ -8,6 +8,7 @@
     --danger: #ff4655;
     --font-main: 'Roboto', sans-serif;
     --font-header: 'Oswald', sans-serif;
+    --card-gap: 30px;
 }
 
 * {
@@ -97,7 +98,7 @@ h1 {
 .grid-layout {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: var(--card-gap);
 }
 
 .card {
@@ -533,6 +534,12 @@ footer a {
 
 .fade-in {
     animation: fadeUp 0.6s ease-out forwards;
+}
+
+#result {
+    display: flex;
+    flex-direction: column;
+    gap: var(--card-gap);
 }
 
 @media (max-width: 600px) {
