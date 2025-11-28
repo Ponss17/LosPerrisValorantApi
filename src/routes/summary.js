@@ -68,7 +68,12 @@ router.get('/:region/:name/:tag', async (req, res) => {
         }
 
         if (historyData.status === 200) {
-            responseData.history = historyData.data;
+            responseData.history = historyData.data.map(match => ({
+                date: match.date,
+                elo: match.elo,
+                change: match.mmr_change_to_last_game,
+                map: match.map.name
+            })).reverse();
         }
 
         res.json({
