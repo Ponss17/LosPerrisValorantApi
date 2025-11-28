@@ -21,7 +21,11 @@ const translations = {
         matchType2: 'Map + Result + KDA',
         matchType3: 'Map + Result + KDA + HS%',
         rankConfig: 'RANK',
-        matchConfig: 'MATCH'
+        matchConfig: 'MATCH',
+        docsTitle: 'API Documentation',
+        docsDescRank: 'returns rank, elo and mmr data.',
+        docsDescMatch: 'returns data from the last competitive match.',
+        docsNote: 'add <code>?format=text</code> to any endpoint for a plain text response.'
     },
     es: {
         title: 'LOSPERRIS <span class="accent">VALORANT API</span>',
@@ -45,7 +49,11 @@ const translations = {
         matchType2: 'Mapa + Resultado + KDA',
         matchType3: 'Mapa + Resultado + KDA + HS%',
         rankConfig: 'RANGO',
-        matchConfig: 'PARTIDA'
+        matchConfig: 'PARTIDA',
+        docsTitle: 'Documentación de la API',
+        docsDescRank: 'devuelve el rango, elo y mmr data.',
+        docsDescMatch: 'devuelve data de la ultima partida competitiva.',
+        docsNote: 'agrega <code>?format=text</code> a cualquier endpoint para una respuesta en texto plano.'
     }
 };
 
@@ -129,7 +137,14 @@ function updateLanguage() {
     document.getElementById('btn-config-rank').textContent = t.rankConfig;
     document.getElementById('btn-config-match').textContent = t.matchConfig;
 
+    document.getElementById('btn-config-match').textContent = t.matchConfig;
+
     document.querySelector('.commands-card h3').textContent = t.botCmds;
+
+    document.getElementById('docs-title').textContent = t.docsTitle;
+    document.getElementById('docs-desc-rank').textContent = t.docsDescRank;
+    document.getElementById('docs-desc-match').textContent = t.docsDescMatch;
+    document.getElementById('docs-note').innerHTML = t.docsNote;
 }
 
 function getCommandSyntax(platform, url) {
