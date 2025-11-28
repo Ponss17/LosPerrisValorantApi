@@ -95,6 +95,19 @@ function updateLanguage() {
     document.getElementById('footer-created').innerHTML = t.footerCreated;
     document.getElementById('footer-other-api').innerHTML = t.footerOtherApi;
     document.getElementById('footer-disclaimer').textContent = t.footerDisclaimer;
+
+    if (currentData && currentData.rank) {
+        let displayRank = currentData.rank;
+        if (currentLang === 'es') {
+            for (const [eng, esp] of Object.entries(translations.rankNames)) {
+                if (displayRank.includes(eng)) {
+                    displayRank = displayRank.replace(eng, esp);
+                    break;
+                }
+            }
+        }
+        document.getElementById('rank-text').textContent = displayRank;
+    }
 }
 
 function getCommandSyntax(platform, url) {
@@ -159,7 +172,18 @@ document.getElementById('rank-form').addEventListener('submit', async (e) => {
             currentData = d;
 
             document.getElementById('player-name').textContent = `${d.name}#${d.tag}`;
-            document.getElementById('rank-text').textContent = d.rank;
+
+            let displayRank = d.rank;
+            if (currentLang === 'es') {
+                for (const [eng, esp] of Object.entries(translations.rankNames)) {
+                    if (displayRank.includes(eng)) {
+                        displayRank = displayRank.replace(eng, esp);
+                        break;
+                    }
+                }
+            }
+            document.getElementById('rank-text').textContent = displayRank;
+
             document.getElementById('rank-img').src = d.rank_image;
             document.getElementById('elo').textContent = d.elo;
 
@@ -246,12 +270,11 @@ function renderChart(history) {
         mmrChartInstance.destroy();
     }
 
-    const labels = history.map(h => h.map); // Or use date
+    const labels = history.map(h => h.map);
     const dataPoints = history.map(h => h.elo);
 
-    // Gradient for the line
     const gradient = ctx.createLinearGradient(0, 0, 0, 400);
-    gradient.addColorStop(0, 'rgba(255, 70, 85, 0.5)'); // Valorant Red
+    gradient.addColorStop(0, 'rgba(255, 70, 85, 0.5)');
     gradient.addColorStop(1, 'rgba(255, 70, 85, 0)');
 
     mmrChartInstance = new Chart(ctx, {

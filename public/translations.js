@@ -62,5 +62,16 @@ const translations = {
         footerCreated: 'Creado por <a href="https://www.instagram.com/ponss_jean/" target="_blank">Ponss17</a>',
         footerOtherApi: 'Mira mi otra Api <a href="https://www.losperris.site/" target="_blank" class="highlight-link">LosPerris Followage API</a>',
         footerDisclaimer: 'La API de Valorant de LosPerris no cuenta con el respaldo de Riot Games y no refleja las opiniones ni los puntos de vista de Riot Games ni de ninguna persona involucrada oficialmente en la producción o gestión de propiedades de Riot Games. Riot Games y todas las propiedades asociadas son marcas comerciales o marcas registradas de Riot Games, Inc.'
+    },
+    rankNames: {
+        'Iron': 'Hierro',
+        'Bronze': 'Bronce',
+        'Silver': 'Plata',
+        'Gold': 'Oro',
+        'Platinum': 'Platino',
+        'Diamond': 'Diamante',
+        'Ascendant': 'Ascendente',
+        'Immortal': 'Inmortal',
+        'Radiant': 'Radiante'
     }
 };
