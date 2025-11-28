@@ -25,7 +25,10 @@ const translations = {
         docsTitle: 'API Documentation',
         docsDescRank: 'returns rank, elo and mmr data.',
         docsDescMatch: 'returns data from the last competitive match.',
-        docsNote: 'add <code>?format=text</code> to any endpoint for a plain text response.'
+        docsNote: 'add <code>?format=text</code> to any endpoint for a plain text response.',
+        footerCreated: 'Created by <a href="https://www.instagram.com/ponss_jean/" target="_blank">Ponss17</a>',
+        footerOtherApi: 'Check my other Api <a href="https://www.losperris.site/" target="_blank" class="highlight-link">LosPerris Followage API</a>',
+        footerDisclaimer: 'LosPerris Valorant API is not endorsed by Riot Games and does not reflect the views or opinions of Riot Games or anyone officially involved in producing or managing Riot Games properties. Riot Games and all associated properties are trademarks or registered trademarks of Riot Games, Inc.'
     },
     es: {
         title: 'LOSPERRIS <span class="accent">VALORANT API</span>',
@@ -53,7 +56,10 @@ const translations = {
         docsTitle: 'Documentación de la API',
         docsDescRank: 'devuelve el rango, elo y mmr data.',
         docsDescMatch: 'devuelve data de la ultima partida competitiva.',
-        docsNote: 'agrega <code>?format=text</code> a cualquier endpoint para una respuesta en texto plano.'
+        docsNote: 'agrega <code>?format=text</code> a cualquier endpoint para una respuesta en texto plano.',
+        footerCreated: 'Creado por <a href="https://www.instagram.com/ponss_jean/" target="_blank">Ponss17</a>',
+        footerOtherApi: 'Mira mi otra Api <a href="https://www.losperris.site/" target="_blank" class="highlight-link">LosPerris Followage API</a>',
+        footerDisclaimer: 'La API de Valorant de LosPerris no cuenta con el respaldo de Riot Games y no refleja las opiniones ni los puntos de vista de Riot Games ni de ninguna persona involucrada oficialmente en la producción o gestión de propiedades de Riot Games. Riot Games y todas las propiedades asociadas son marcas comerciales o marcas registradas de Riot Games, Inc.'
     }
 };
 
@@ -145,6 +151,10 @@ function updateLanguage() {
     document.getElementById('docs-desc-rank').textContent = t.docsDescRank;
     document.getElementById('docs-desc-match').textContent = t.docsDescMatch;
     document.getElementById('docs-note').innerHTML = t.docsNote;
+
+    document.getElementById('footer-created').innerHTML = t.footerCreated;
+    document.getElementById('footer-other-api').innerHTML = t.footerOtherApi;
+    document.getElementById('footer-disclaimer').textContent = t.footerDisclaimer;
 }
 
 function getCommandSyntax(platform, url) {
