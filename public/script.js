@@ -84,7 +84,11 @@ function updateLanguage() {
 
     document.getElementById('btn-config-match').textContent = t.matchConfig;
 
+    document.getElementById('btn-config-match').textContent = t.matchConfig;
+
     document.querySelector('.commands-card h3').textContent = t.botCmds;
+    document.getElementById('lbl-cmd-rank').textContent = t.cmdRank;
+    document.getElementById('lbl-cmd-match').textContent = t.cmdMatch;
 
     document.getElementById('docs-title').textContent = t.docsTitle;
     document.getElementById('docs-desc-rank').textContent = t.docsDescRank;
