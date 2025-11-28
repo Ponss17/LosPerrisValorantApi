@@ -61,6 +61,9 @@ function updateLanguage() {
     document.getElementById('last-match-title').textContent = t.lastMatch;
     document.getElementById('error-msg').textContent = t.error;
 
+    const chartTitle = document.getElementById('chart-title');
+    if (chartTitle) chartTitle.textContent = t.chartTitle;
+
     document.querySelector('.config-card h3').textContent = t.botConfig;
     document.querySelector('label[for="bot-platform"]').textContent = t.botPlatform;
     document.querySelector('label[for="bot-lang"]').textContent = t.botLang;
@@ -203,6 +206,16 @@ document.getElementById('rank-form').addEventListener('submit', async (e) => {
                 }
             }
 
+            try {
+                const historyRes = await fetch(`${apiBase}/history/${region}/${name}/${tag}`);
+                const historyData = await historyRes.json();
+                if (historyRes.ok) {
+                    renderChart(historyData.data);
+                }
+            } catch (err) {
+                console.error('Error fetching history:', err);
+            }
+
             updateCommands();
 
             const resultContainer = document.getElementById('result');
@@ -223,6 +236,100 @@ document.getElementById('rank-form').addEventListener('submit', async (e) => {
         submitBtn.textContent = translations[currentLang].search;
     }
 });
+
+let mmrChartInstance = null;
+
+function renderChart(history) {
+    const ctx = document.getElementById('mmrChart').getContext('2d');
+
+    if (mmrChartInstance) {
+        mmrChartInstance.destroy();
+    }
+
+    const labels = history.map(h => h.map); // Or use date
+    const dataPoints = history.map(h => h.elo);
+
+    // Gradient for the line
+    const gradient = ctx.createLinearGradient(0, 0, 0, 400);
+    gradient.addColorStop(0, 'rgba(255, 70, 85, 0.5)'); // Valorant Red
+    gradient.addColorStop(1, 'rgba(255, 70, 85, 0)');
+
+    mmrChartInstance = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'ELO',
+                data: dataPoints,
+                borderColor: '#ff4655',
+                backgroundColor: gradient,
+                borderWidth: 2,
+                pointBackgroundColor: '#fff',
+                pointBorderColor: '#ff4655',
+                pointRadius: 4,
+                pointHoverRadius: 6,
+                fill: true,
+                tension: 0.4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: false
+                },
+                tooltip: {
+                    mode: 'index',
+                    intersect: false,
+                    callbacks: {
+                        label: function (context) {
+                            let label = context.dataset.label || '';
+                            if (label) {
+                                label += ': ';
+                            }
+                            if (context.parsed.y !== null) {
+                                label += context.parsed.y;
+                            }
+                            return label;
+                        }
+                    }
+                }
+            },
+            scales: {
+                x: {
+                    grid: {
+                        display: false,
+                        drawBorder: false
+                    },
+                    ticks: {
+                        color: '#8b9bb4',
+                        font: {
+                            family: 'Roboto'
+                        }
+                    }
+                },
+                y: {
+                    grid: {
+                        color: 'rgba(255, 255, 255, 0.05)',
+                        drawBorder: false
+                    },
+                    ticks: {
+                        color: '#8b9bb4',
+                        font: {
+                            family: 'Roboto'
+                        }
+                    }
+                }
+            },
+            interaction: {
+                mode: 'nearest',
+                axis: 'x',
+                intersect: false
+            }
+        }
+    });
+}
 
 document.querySelectorAll('.btn-copy').forEach(btn => {
     btn.addEventListener('click', () => {

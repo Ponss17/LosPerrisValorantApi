@@ -5,6 +5,7 @@ const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
 const rankRoutes = require('./routes/rank');
 const matchRoutes = require('./routes/match');
+const historyRoutes = require('./routes/history');
 
 const app = express();
 
@@ -13,7 +14,7 @@ app.use(helmet({
         directives: {
             defaultSrc: ["'self'"],
             imgSrc: ["'self'", "data:", "https://media.valorant-api.com"],
-            scriptSrc: ["'self'", "'unsafe-inline'"],
+            scriptSrc: ["'self'", "'unsafe-inline'", "https://cdn.jsdelivr.net"],
             styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
             fontSrc: ["'self'", "https://fonts.gstatic.com"]
         }
@@ -42,5 +43,6 @@ app.use(express.static(path.join(__dirname, '../public')));
 
 app.use('/rank', rankRoutes);
 app.use('/match', matchRoutes);
+app.use('/history', historyRoutes);
 
 module.exports = app;

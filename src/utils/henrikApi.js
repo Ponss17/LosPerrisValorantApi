@@ -66,6 +66,24 @@ async function getMatchesByPUUID(region, puuid, mode = 'competitive') {
 
 const cache = require('./cache');
 
+async function getMMRHistoryByPUUID(region, puuid) {
+    try {
+        const response = await axios.get(`${BASE_URL}/v1/by-puuid/mmr-history/${region}/${puuid}`, {
+            headers: {
+                'Authorization': getApiKey(),
+                'accept': 'application/json'
+            }
+        });
+        return response.data;
+    } catch (error) {
+        if (error.response) {
+            throw { status: error.response.status, data: error.response.data };
+        } else {
+            throw { status: 500, message: 'Internal Server Error', error: error.message };
+        }
+    }
+}
+
 async function getPUUID(name, tag) {
     const cacheKey = `puuid:${name.toLowerCase()}:${tag.toLowerCase()}`;
     const cachedPUUID = cache.get(cacheKey);
@@ -86,4 +104,4 @@ async function getPUUID(name, tag) {
     }
 }
 
-module.exports = { getAccount, getMMRByPUUID, getMatchesByPUUID, getPUUID };
+module.exports = { getAccount, getMMRByPUUID, getMatchesByPUUID, getPUUID, getMMRHistoryByPUUID };

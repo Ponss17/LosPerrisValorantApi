@@ -11,6 +11,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&family=Roboto:wght@400;700&display=swap"
         rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
@@ -23,7 +24,7 @@
     <div class="main-container">
         <header>
             <h1 id="title">LOSPERRIS <span class="accent">VALORANT API</span></h1>
-            <p id="subtitle">Rango, Historial y Comandos para Streamers</p>
+            <p id="subtitle">Rango, Historial y Comandos</p>
         </header>
 
         <div class="grid-layout">
@@ -95,6 +96,13 @@
                                 <span id="match-hs" class="stat-value">25%</span>
                             </div>
                         </div>
+                    </div>
+                </section>
+
+                <section class="card chart-card">
+                    <h3 id="chart-title">Historial de MMR</h3>
+                    <div class="chart-container">
+                        <canvas id="mmrChart"></canvas>
                     </div>
                 </section>
 
