@@ -1,5 +1,4 @@
 
-
 let currentLang = 'es';
 let currentData = null;
 let currentConfigMode = 'rank';
@@ -214,6 +213,11 @@ document.getElementById('rank-form').addEventListener('submit', async (e) => {
                 const isWin = m.teams.red.has_won ? (stats.team === 'Red') : (stats.team === 'Blue');
 
                 document.getElementById('match-map').textContent = meta.map;
+
+                const matchDate = new Date(meta.game_start * 1000);
+                const dateOptions = { day: 'numeric', month: 'short' };
+                document.getElementById('match-date').textContent = matchDate.toLocaleDateString(currentLang, dateOptions);
+
                 const resultEl = document.getElementById('match-result');
                 resultEl.textContent = isWin ? 'VICTORIA' : 'DERROTA';
                 resultEl.className = `match-result ${isWin ? 'win' : 'loss'}`;

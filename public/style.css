@@ -3,19 +3,14 @@
     --bg-dark: #0f1923;
     --card-bg: rgba(15, 25, 35, 0.9);
     --card-border: rgba(255, 255, 255, 0.1);
-
     --accent-color: #ff4655;
     --accent-hover: #ff2b3d;
-
     --text-color: #ece8e1;
     --text-muted: #8b9bb4;
-
     --success: #00ff9d;
     --danger: #ff4655;
-
     --font-main: 'Roboto', sans-serif;
     --font-header: 'Oswald', sans-serif;
-
     --card-gap: 24px;
     --border-radius: 4px;
 }
@@ -400,12 +395,20 @@ select:focus {
     margin-bottom: 20px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     padding-bottom: 15px;
+    font-size: 0.9rem;
 }
 
 .map-name {
     font-family: var(--font-header);
     font-size: 1.8rem;
     text-transform: uppercase;
+}
+
+.match-date {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    font-weight: 500;
+    margin: 0 10px;
 }
 
 .match-result {
