@@ -55,55 +55,26 @@ Copia el código generado en la sección **"Comandos del Bot"** y pégalo en tu 
 
 ---
 
-## 🛠️ API Reference
+### 🎛️ Personalización Total
+Configura el bot exactamente como lo quieres:
+- **Idioma**: Respuestas en Español o Inglés.
+- **Plataforma**: Compatible con Nightbot, StreamElements, Fossabot y Streamlabs.
+- **Formato**: Elige qué información mostrar (Solo Rango, con Puntos, con ELO, KDA, HS%, etc.).
 
-Si eres desarrollador, puedes consumir la API directamente.
+### 📊 Visualización Completa
+No es solo un generador de comandos. La web te permite:
+- Ver tu **progreso de MMR** en un gráfico interactivo.
+- Analizar tu **última partida** con detalles de KDA y porcentaje de Headshots.
+- Guardar tus **búsquedas recientes** para acceso rápido.
 
-### Base URL
-\`\`\`
-https://tu-dominio-api.com
-\`\`\`
-
-### Endpoints
-
-#### 1. Obtener Rango
-Devuelve la información actual de rango del jugador.
-
-\`\`\`http
-GET /rank/:region/:name/:tag
-\`\`\`
-
-| Parámetro | Tipo | Descripción |
-|-----------|------|-------------|
-| `region` | `string` | Región del jugador (na, eu, ap, kr, latam, br) |
-| `name` | `string` | Riot ID (nombre) |
-| `tag` | `string` | Riot Tag (sin el #) |
-| `format` | `query` | (Opcional) `text` para respuesta en texto plano |
-
-#### 2. Última Partida
-Obtiene estadísticas de la última partida jugada.
-
-\`\`\`http
-GET /match/last/:region/:name/:tag
-\`\`\`
-
-| Parámetro | Tipo | Descripción |
-|-----------|------|-------------|
-| `format` | `query` | (Opcional) `text` para respuesta en texto plano |
-
-#### 3. Historial de MMR
-Obtiene el historial de cambios de ELO para gráficos.
-
-\`\`\`http
-GET /history/:region/:name/:tag
-\`\`\`
-
-#### 4. Resumen Completo
-Obtiene un resumen completo del perfil (Rango, Última Partida e Historial) en una sola llamada. Ideal para dashboards.
-
-```http
-GET /summary/:region/:name/:tag
-```
+### 🌍 Soporte Multi-Región
+Funciona para todas las regiones competitivas de Valorant:
+- **NA** (North America)
+- **EU** (Europe)
+- **LATAM** (Latin America)
+- **BR** (Brazil)
+- **KR** (Korea)
+- **AP** (Asia Pacific)
 
 ---
 
