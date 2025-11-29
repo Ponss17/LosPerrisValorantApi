@@ -82,7 +82,27 @@ router.get('/:region/:name/:tag', async (req, res) => {
         });
 
     } catch (error) {
-        res.status(error.status || 500).json(error.data || { message: error.message });
+        const status = error.status || 500;
+        let errorCode = 'SERVER_ERROR';
+        let message = 'An unexpected error occurred';
+
+        if (status === 404) {
+            errorCode = 'USER_NOT_FOUND';
+            message = 'Player not found';
+        } else if (status === 429) {
+            errorCode = 'RATE_LIMIT';
+            message = 'Too many requests';
+        } else if (status === 403) {
+            errorCode = 'API_KEY_INVALID';
+            message = 'Invalid API Key';
+        }
+
+        res.status(status).json({
+            status: status,
+            error: errorCode,
+            message: message,
+            details: error.data || error.message
+        });
     }
 });
 

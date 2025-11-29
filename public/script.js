@@ -250,11 +250,23 @@ document.getElementById('rank-form').addEventListener('submit', async (e) => {
 
             document.getElementById('error').classList.add('hidden');
         } else {
-            throw new Error('Player not found');
+            throw summaryData;
         }
     } catch (error) {
         document.getElementById('result').classList.add('hidden');
-        document.getElementById('error').classList.remove('hidden');
+        const errorDiv = document.getElementById('error');
+        errorDiv.classList.remove('hidden');
+
+        const t = translations[currentLang];
+        let msg = t.error;
+
+        if (error.error) {
+            if (error.error === 'USER_NOT_FOUND') msg = t.errorUserNotFound;
+            else if (error.error === 'RATE_LIMIT') msg = t.errorRateLimit;
+            else if (error.error === 'SERVER_ERROR') msg = t.errorServer;
+        }
+
+        document.getElementById('error-msg').textContent = msg;
     } finally {
         submitBtn.disabled = false;
         submitBtn.textContent = translations[currentLang].search;

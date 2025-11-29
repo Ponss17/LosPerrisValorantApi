@@ -8,6 +8,8 @@ Diseñado para streamers, esta herramienta te permite generar comandos personali
 - **Traducción de Rangos**: Los nombres de los rangos se traducen automáticamente (ej. "Gold" -> "Oro").
 - **Historial de MMR**: Gráfico interactivo para ver tu progreso de ELO en las últimas partidas.
 - **Fecha de Partida**: Ahora puedes ver cuándo se jugó la última partida.
+- **Mejoras de Velocidad**: Carga de perfil ultra-rápida.
+- **Mensajes de Error**: Avisos claros si el usuario no existe o hay problemas de conexión.
 
 ## 🚀 Cómo Usar (Web)
 
