@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { getPUUID, getMMRByPUUID } = require('../utils/henrikApi');
+const { formatRankData } = require('../utils/formatters');
 
 router.get('/:region/:name/:tag', async (req, res) => {
     const { region, name, tag } = req.params;
@@ -44,18 +45,7 @@ router.get('/:region/:name/:tag', async (req, res) => {
 
             res.json({
                 status: 200,
-                data: {
-                    name: accountData.data.name,
-                    tag: accountData.data.tag,
-                    puuid: puuid,
-                    region: region,
-                    rank: currentData.currenttierpatched,
-                    rank_image: currentData.images.large,
-                    elo: currentData.elo,
-                    mmr_change: currentData.mmr_change_to_last_game,
-                    ranking_in_tier: currentData.ranking_in_tier,
-                    card: accountData.data.card
-                }
+                data: formatRankData(accountData, mmrData)
             });
         } else {
             if (req.query.format === 'text') {

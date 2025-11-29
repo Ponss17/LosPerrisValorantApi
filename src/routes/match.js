@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { getPUUID, getMatchesByPUUID } = require('../utils/henrikApi');
+const { formatMatchData } = require('../utils/formatters');
 
 router.get('/last/:region/:name/:tag', async (req, res) => {
     const { region, name, tag } = req.params;
@@ -60,21 +61,9 @@ router.get('/last/:region/:name/:tag', async (req, res) => {
                     : `Last Match: ${map} - ${result} (${kda})`);
             }
 
-            const agentName = stats.character;
-            const agentIcon = stats.assets.agent.small;
-            const agentImage = stats.assets.agent.bust || stats.assets.agent.full || agentIcon;
-
             res.json({
                 status: 200,
-                data: {
-                    ...lastMatch,
-                    derived: {
-                        hs_percent: hsPercentage,
-                        agent_name: agentName,
-                        agent_icon: agentIcon,
-                        agent_image: agentImage
-                    }
-                }
+                data: formatMatchData(lastMatch, puuid)
             });
         } else {
             if (req.query.format === 'text') {

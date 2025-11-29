@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { getPUUID, getMMRHistoryByPUUID } = require('../utils/henrikApi');
+const { formatHistoryData } = require('../utils/formatters');
 
 router.get('/:region/:name/:tag', async (req, res) => {
     const { region, name, tag } = req.params;
@@ -16,12 +17,7 @@ router.get('/:region/:name/:tag', async (req, res) => {
         const historyData = await getMMRHistoryByPUUID(region, puuid);
 
         if (historyData.status === 200) {
-            const formattedHistory = historyData.data.map(match => ({
-                date: match.date,
-                elo: match.elo,
-                change: match.mmr_change_to_last_game,
-                map: match.map.name
-            })).reverse();
+            const formattedHistory = formatHistoryData(historyData);
 
             res.json({
                 status: 200,
