@@ -14,6 +14,8 @@ function formatRankData(accountData, mmrData) {
     };
 }
 
+const { MAP_UUIDS } = require('./constants');
+
 function formatMatchData(matchData, puuid) {
     const stats = matchData.players.all_players.find(p => p.puuid === puuid);
     if (!stats) return null;
@@ -25,13 +27,18 @@ function formatMatchData(matchData, puuid) {
     const agentIcon = stats.assets.agent.small;
     const agentImage = stats.assets.agent.bust || stats.assets.agent.full || agentIcon;
 
+    const mapName = matchData.metadata.map;
+    const mapUuid = MAP_UUIDS[mapName];
+    const mapImage = mapUuid ? `https://media.valorant-api.com/maps/${mapUuid}/splash.png` : null;
+
     return {
         ...matchData,
         derived: {
             hs_percent: hsPercentage,
             agent_name: agentName,
             agent_icon: agentIcon,
-            agent_image: agentImage
+            agent_image: agentImage,
+            map_image: mapImage
         }
     };
 }

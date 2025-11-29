@@ -231,8 +231,9 @@ document.getElementById('rank-form').addEventListener('submit', async (e) => {
                     document.getElementById('match-hs').textContent = `${m.derived.hs_percent}%`;
                     document.getElementById('match-agent-icon').src = m.derived.agent_icon;
 
-                    if (m.derived.agent_image) {
-                        document.querySelector('.match-card').style.setProperty('--match-bg', `url('${m.derived.agent_image}')`);
+                    const bgImage = m.derived.map_image || m.derived.agent_image;
+                    if (bgImage) {
+                        document.querySelector('.match-card').style.setProperty('--match-bg', `url('${bgImage}')`);
                     }
                 }
             }
