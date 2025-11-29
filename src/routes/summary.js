@@ -2,8 +2,18 @@ const express = require('express');
 const router = express.Router();
 const { getPUUID, getMMRByPUUID, getMatchesByPUUID, getMMRHistoryByPUUID } = require('../utils/henrikApi');
 
+const CACHE_TTL = 300 * 1000;
+const summaryCache = new Map();
+
 router.get('/:region/:name/:tag', async (req, res) => {
     const { region, name, tag } = req.params;
+    const cacheKey = `${region.toLowerCase()}:${name.toLowerCase()}:${tag.toLowerCase()}`;
+
+    const cached = summaryCache.get(cacheKey);
+    if (cached && (Date.now() - cached.timestamp < CACHE_TTL)) {
+        console.log(`[CACHE HIT] ${cacheKey}`);
+        return res.json(cached.data);
+    }
 
     try {
         const accountData = await getPUUID(name, tag);
@@ -76,10 +86,18 @@ router.get('/:region/:name/:tag', async (req, res) => {
             })).reverse();
         }
 
-        res.json({
+        const finalResponse = {
             status: 200,
             data: responseData
+        };
+
+        // Save to Cache
+        summaryCache.set(cacheKey, {
+            timestamp: Date.now(),
+            data: finalResponse
         });
+
+        res.json(finalResponse);
 
     } catch (error) {
         const status = error.status || 500;
