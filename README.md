@@ -1,4 +1,4 @@
-# 🎮 LosPerris - Valorant API
+# <img src="public/imgs/LosPerris-gamer.ico" width="40" alt="LosPerris Gamer"/> LosPerris - Valorant API
 
 ![License](https://img.shields.io/badge/license-ISC-blue.svg)
 ![Node](https://img.shields.io/badge/node-%3E%3D14.0.0-brightgreen.svg)
