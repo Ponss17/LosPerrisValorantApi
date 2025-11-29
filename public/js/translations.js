@@ -1,4 +1,4 @@
-export const translations = {
+const translations = {
     en: {
         title: 'LOSPERRIS <span class="accent">VALORANT API</span>',
         subtitle: 'Rank, History & Commands for Streamers',
@@ -66,7 +66,7 @@ export const translations = {
         docsTitle: 'Documentación de la API',
         docsDescRank: 'devuelve el rango, elo y mmr data.',
         docsDescMatch: 'devuelve data de la ultima partida competitiva.',
-        docsNote: 'agrega <code>?format=text</code> to any endpoint for a plain text response.',
+        docsNote: 'agrega <code>?format=text</code> a cualquier endpoint para una respuesta en texto plano.',
         errorUserNotFound: 'Jugador no encontrado. Revisa el Riot ID.',
         errorRateLimit: 'Demasiadas peticiones. Espera un poco.',
         errorServer: 'Error del servidor. Intenta más tarde.',

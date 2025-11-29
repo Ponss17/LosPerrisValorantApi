@@ -1,14 +1,11 @@
-import { fetchPlayerSummary } from './api.js';
-import * as UI from './ui.js';
-
 let currentLang = 'es';
 let fullSummaryData = null;
 let currentConfigMode = 'rank';
 const MAX_RECENT_SEARCHES = 3;
 
 document.addEventListener('DOMContentLoaded', () => {
-    UI.updateLanguageUI(currentLang);
-    renderRecentSearches();
+    updateLanguageUI(currentLang);
+    renderRecentSearchesMain();
 });
 
 document.querySelectorAll('.lang-btn').forEach(btn => {
@@ -16,31 +13,31 @@ document.querySelectorAll('.lang-btn').forEach(btn => {
         document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         currentLang = btn.dataset.lang;
-        UI.updateLanguageUI(currentLang);
+        updateLanguageUI(currentLang);
         if (fullSummaryData) {
-            UI.renderRankCard(fullSummaryData.data.rank, currentLang);
-            UI.renderMatchCard(fullSummaryData.data.match, fullSummaryData.data.rank.puuid, currentLang);
-            UI.updateCommandsUI(fullSummaryData);
+            renderRankCard(fullSummaryData.data.rank, currentLang);
+            renderMatchCard(fullSummaryData.data.match, fullSummaryData.data.rank.puuid, currentLang);
+            updateCommandsUI(fullSummaryData);
         }
     });
 });
 
 document.getElementById('btn-config-rank').addEventListener('click', () => {
     currentConfigMode = 'rank';
-    UI.toggleConfigMode('rank');
-    UI.updateCommandsUI(fullSummaryData);
+    toggleConfigMode('rank');
+    updateCommandsUI(fullSummaryData);
 });
 
 document.getElementById('btn-config-match').addEventListener('click', () => {
     currentConfigMode = 'match';
-    UI.toggleConfigMode('match');
-    UI.updateCommandsUI(fullSummaryData);
+    toggleConfigMode('match');
+    updateCommandsUI(fullSummaryData);
 });
 
 const configInputs = ['bot-platform', 'bot-lang', 'bot-type', 'bot-match-type'];
 configInputs.forEach(id => {
     document.getElementById(id).addEventListener('change', () => {
-        UI.updateCommandsUI(fullSummaryData);
+        updateCommandsUI(fullSummaryData);
     });
 });
 
@@ -51,30 +48,30 @@ document.getElementById('rank-form').addEventListener('submit', async (e) => {
     const name = document.getElementById('name').value;
     const tag = document.getElementById('tag').value;
 
-    UI.showLoading(currentLang);
+    showLoading(currentLang);
 
     try {
         const data = await fetchPlayerSummary(region, name, tag);
         fullSummaryData = data;
         saveRecentSearch(region, name, tag);
 
-        UI.renderRankCard(data.data.rank, currentLang);
+        renderRankCard(data.data.rank, currentLang);
 
         if (data.data.match) {
-            UI.renderMatchCard(data.data.match, data.data.rank.puuid, currentLang);
+            renderMatchCard(data.data.match, data.data.rank.puuid, currentLang);
         }
 
         if (data.data.history) {
-            UI.renderChart(data.data.history);
+            renderChart(data.data.history);
         }
 
-        UI.updateCommandsUI(fullSummaryData);
-        UI.showResults();
+        updateCommandsUI(fullSummaryData);
+        showResults();
 
     } catch (error) {
-        UI.showError(error, currentLang);
+        showError(error, currentLang);
     } finally {
-        UI.hideLoading(currentLang);
+        hideLoading(currentLang);
     }
 });
 
@@ -111,12 +108,12 @@ function saveRecentSearch(region, name, tag) {
         searches.pop();
     }
     localStorage.setItem('recentSearches', JSON.stringify(searches));
-    renderRecentSearches();
+    renderRecentSearchesMain();
 }
 
-function renderRecentSearches() {
+function renderRecentSearchesMain() {
     const searches = JSON.parse(localStorage.getItem('recentSearches') || '[]');
-    UI.renderRecentSearches(searches, (s) => {
+    renderRecentSearches(searches, (s) => {
         document.getElementById('region').value = s.region;
         document.getElementById('name').value = s.name;
         document.getElementById('tag').value = s.tag;

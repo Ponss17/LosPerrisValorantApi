@@ -1,9 +1,6 @@
-import { translations } from './translations.js';
-import { formatRankName, formatMatchResult, formatMatchResultShort, getCommandSyntax, apiBase } from './utils.js';
-
 let mmrChartInstance = null;
 
-export function updateLanguageUI(lang) {
+function updateLanguageUI(lang) {
     const t = translations[lang];
     document.getElementById('title').innerHTML = t.title;
     document.getElementById('subtitle').textContent = t.subtitle;
@@ -54,7 +51,7 @@ export function updateLanguageUI(lang) {
     });
 }
 
-export function renderRankCard(data, lang) {
+function renderRankCard(data, lang) {
     document.getElementById('player-name').textContent = `${data.name}#${data.tag}`;
 
     const displayRank = formatRankName(data.rank, lang);
@@ -81,7 +78,7 @@ export function renderRankCard(data, lang) {
     }
 }
 
-export function renderMatchCard(matchData, playerPuuid, lang) {
+function renderMatchCard(matchData, playerPuuid, lang) {
     if (!matchData) return;
 
     const meta = matchData.metadata;
@@ -111,7 +108,7 @@ export function renderMatchCard(matchData, playerPuuid, lang) {
     }
 }
 
-export function renderChart(history) {
+function renderChart(history) {
     const ctx = document.getElementById('mmrChart').getContext('2d');
 
     if (mmrChartInstance) {
@@ -202,7 +199,7 @@ export function renderChart(history) {
     });
 }
 
-export function renderRecentSearches(searches, onSearchClick) {
+function renderRecentSearches(searches, onSearchClick) {
     const container = document.getElementById('recent-searches');
 
     if (searches.length === 0) {
@@ -222,7 +219,7 @@ export function renderRecentSearches(searches, onSearchClick) {
     });
 }
 
-export function updateCommandsUI(fullSummaryData) {
+function updateCommandsUI(fullSummaryData) {
     if (!fullSummaryData) return;
 
     const region = document.getElementById('region').value;
@@ -283,19 +280,19 @@ function updateExamplePreviews(data, botLang, botType, botMatchType) {
     }
 }
 
-export function showLoading(lang) {
+function showLoading(lang) {
     const submitBtn = document.getElementById('submit-btn');
     submitBtn.disabled = true;
     submitBtn.textContent = lang === 'es' ? 'Buscando jugador...' : 'Searching...';
 }
 
-export function hideLoading(lang) {
+function hideLoading(lang) {
     const submitBtn = document.getElementById('submit-btn');
     submitBtn.disabled = false;
     submitBtn.textContent = translations[lang].search;
 }
 
-export function showResults() {
+function showResults() {
     const resultContainer = document.getElementById('result');
     resultContainer.classList.remove('hidden');
     resultContainer.classList.remove('fade-in');
@@ -304,7 +301,7 @@ export function showResults() {
     document.getElementById('error').classList.add('hidden');
 }
 
-export function showError(error, lang) {
+function showError(error, lang) {
     document.getElementById('result').classList.add('hidden');
     const errorDiv = document.getElementById('error');
     errorDiv.classList.remove('hidden');
@@ -321,7 +318,7 @@ export function showError(error, lang) {
     document.getElementById('error-msg').textContent = msg;
 }
 
-export function toggleConfigMode(mode) {
+function toggleConfigMode(mode) {
     document.getElementById('btn-config-rank').classList.toggle('active', mode === 'rank');
     document.getElementById('btn-config-match').classList.toggle('active', mode === 'match');
 

@@ -1,6 +1,4 @@
-import { translations } from './translations.js';
-
-export const getBaseUrl = () => {
+const getBaseUrl = () => {
     const path = window.location.pathname;
     if (path.startsWith('/valorantapi')) {
         return '/valorantapi';
@@ -8,9 +6,9 @@ export const getBaseUrl = () => {
     return '';
 };
 
-export const apiBase = getBaseUrl();
+const apiBase = getBaseUrl();
 
-export function getCommandSyntax(platform, url) {
+function getCommandSyntax(platform, url) {
     switch (platform) {
         case 'nightbot':
             return `$(urlfetch ${url})`;
@@ -25,7 +23,7 @@ export function getCommandSyntax(platform, url) {
     }
 }
 
-export function formatRankName(rankName, lang) {
+function formatRankName(rankName, lang) {
     if (lang === 'es') {
         for (const [eng, esp] of Object.entries(translations.rankNames)) {
             if (rankName.includes(eng)) {
@@ -36,14 +34,14 @@ export function formatRankName(rankName, lang) {
     return rankName;
 }
 
-export function formatMatchResult(isWin, lang) {
+function formatMatchResult(isWin, lang) {
     if (lang === 'es') {
         return isWin ? 'VICTORIA' : 'DERROTA';
     }
     return isWin ? 'WIN' : 'LOSS';
 }
 
-export function formatMatchResultShort(isWin, lang) {
+function formatMatchResultShort(isWin, lang) {
     if (lang === 'es') {
         return isWin ? 'Victoria' : 'Derrota';
     }
