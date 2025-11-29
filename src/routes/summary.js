@@ -91,7 +91,6 @@ router.get('/:region/:name/:tag', async (req, res) => {
             data: responseData
         };
 
-        // Save to Cache
         summaryCache.set(cacheKey, {
             timestamp: Date.now(),
             data: finalResponse

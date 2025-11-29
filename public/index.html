@@ -11,6 +11,7 @@
         content="Valorant, API, Rank, MMR, Match History, Streamer, Bot, Nightbot, StreamElements, LosPerris">
     <meta name="theme-color" content="#ff4655">
 
+    <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://valorant-api-ponss17.vercel.app/">
     <meta property="og:title" content="LosPerris Valorant API">
@@ -18,6 +19,7 @@
         content="Get your Valorant Rank, MMR and Match History. Generate commands for your Twitch stream bot easily.">
     <meta property="og:image"
         content="https://media.valorant-api.com/agents/add6443a-41bd-e414-f685-bc95d7145f70/fullportrait.png">
+
     <link rel="icon" type="image/x-icon" href="/valorantapi/imgs/LosPerris-gamer.ico">
     <link rel="stylesheet" href="/valorantapi/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -65,6 +67,8 @@
                     </div>
                     <button type="submit" id="submit-btn" class="btn-primary">BUSCAR</button>
                 </form>
+                <div id="recent-searches" class="recent-searches hidden"></div>
+                <p class="error-msg hidden" id="error-msg"></p>
             </section>
 
             <div id="result" class="hidden">
@@ -72,10 +76,24 @@
                     <div class="overlay"></div>
                     <div class="card-content">
                         <img id="player-card-small" src="" alt="Card" class="player-card-small">
-                        <img id="rank-img" src="" alt="Rank" class="rank-icon">
-                        <div class="info">
-                            <h2 id="player-name">Player#Tag</h2>
-                            <div class="rank-badge" id="rank-text">Gold 1</div>
+                        <div class="card-header">
+                            <div class="header-content">
+                                <img id="rank-img" src="" alt="Rank" class="rank-icon">
+                                <div class="info">
+                                    <h2 id="player-name">Player#Tag</h2>
+                                    <div class="rank-badge" id="rank-text">Gold 1</div>
+                                </div>
+                            </div>
+                            <button id="btn-copy-json" class="btn-icon" title="Copy JSON Response">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="stats-container">
                             <div class="stats">
                                 <span><i class="icon-elo"></i> <span id="elo">1200</span> ELO</span>
                                 <span id="mmr-change" class="mmr-change">+15</span>

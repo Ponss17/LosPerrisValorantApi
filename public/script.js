@@ -169,8 +169,10 @@ document.getElementById('rank-form').addEventListener('submit', async (e) => {
     try {
         const summaryRes = await fetch(`${apiBase}/summary/${region}/${name}/${tag}`);
         const summaryData = await summaryRes.json();
+        fullSummaryData = summaryData;
 
         if (summaryRes.ok) {
+            saveRecentSearch(region, name, tag);
             const d = summaryData.data.rank;
             currentData = d;
 
@@ -378,3 +380,62 @@ document.querySelectorAll('.btn-copy').forEach(btn => {
         setTimeout(() => btn.textContent = originalText, 2000);
     });
 });
+
+const MAX_RECENT_SEARCHES = 3;
+
+function saveRecentSearch(region, name, tag) {
+    let searches = JSON.parse(localStorage.getItem('recentSearches') || '[]');
+
+    searches = searches.filter(s => !(s.name.toLowerCase() === name.toLowerCase() && s.tag.toLowerCase() === tag.toLowerCase()));
+
+    searches.unshift({ region, name, tag });
+
+    if (searches.length > MAX_RECENT_SEARCHES) {
+        searches.pop();
+    }
+
+    localStorage.setItem('recentSearches', JSON.stringify(searches));
+    renderRecentSearches();
+}
+
+function renderRecentSearches() {
+    const container = document.getElementById('recent-searches');
+    const searches = JSON.parse(localStorage.getItem('recentSearches') || '[]');
+
+    if (searches.length === 0) {
+        container.classList.add('hidden');
+        return;
+    }
+
+    container.innerHTML = '';
+    container.classList.remove('hidden');
+
+    searches.forEach(s => {
+        const chip = document.createElement('div');
+        chip.className = 'search-chip';
+        chip.innerHTML = `<span>${s.name}#${s.tag}</span>`;
+        chip.addEventListener('click', () => {
+            document.getElementById('region').value = s.region;
+            document.getElementById('name').value = s.name;
+            document.getElementById('tag').value = s.tag;
+            document.getElementById('submit-btn').click();
+        });
+        container.appendChild(chip);
+    });
+}
+
+document.getElementById('btn-copy-json').addEventListener('click', () => {
+    if (!fullSummaryData) return;
+
+    const jsonStr = JSON.stringify(fullSummaryData, null, 2);
+    navigator.clipboard.writeText(jsonStr).then(() => {
+        const btn = document.getElementById('btn-copy-json');
+        const originalHtml = btn.innerHTML;
+        btn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4ade80" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+        setTimeout(() => btn.innerHTML = originalHtml, 2000);
+    });
+});
+
+let fullSummaryData = null;
+
+renderRecentSearches();
