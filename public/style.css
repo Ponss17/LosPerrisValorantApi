@@ -20,7 +20,7 @@
 body {
     font-family: var(--font-main);
     background-color: var(--bg-color);
-    background-image: url('https://media.valorant-api.com/maps/e2ad5c54-4114-a870-9641-8eb7c5f4da08/splash.png');
+    background-image: url('https://media.valorant-api.com/maps/e2ad5c54-4114-a870-9641-8ea21279579a/splash.png');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
@@ -307,7 +307,7 @@ option {
     overflow: hidden;
     background-image: var(--match-bg, none);
     background-size: cover;
-    background-position: center;
+    background-position: center top;
 }
 
 .match-card::before {
