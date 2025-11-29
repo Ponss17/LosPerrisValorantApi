@@ -31,34 +31,19 @@ router.get('/last/:region/:name/:tag', async (req, res) => {
                 const meta = lastMatch.metadata;
                 const isWin = lastMatch.teams.red.has_won ? (stats.team === 'Red') : (stats.team === 'Blue');
 
-                const resultEn = isWin ? 'Win' : 'Loss';
-                const resultEs = isWin ? 'Victoria' : 'Derrota';
-                const result = lang === 'es' ? resultEs : resultEn;
+                const result = (lang === 'es')
+                    ? (isWin ? 'Victoria' : 'Derrota')
+                    : (isWin ? 'Win' : 'Loss');
 
                 const kda = `${stats.stats.kills}/${stats.stats.deaths}/${stats.stats.assists}`;
                 const map = meta.map;
+                const prefix = (lang === 'es') ? 'Última Partida' : 'Last Match';
 
-                if (type === '1') {
-                    return res.send(lang === 'es'
-                        ? `Última Partida: ${map} - ${result}`
-                        : `Last Match: ${map} - ${result}`);
-                }
+                if (type === '1') return res.send(`${prefix}: ${map} - ${result}`);
+                if (type === '2') return res.send(`${prefix}: ${map} - ${result} (${kda})`);
+                if (type === '3') return res.send(`${prefix}: ${map} - ${result} (${kda} - ${hsPercentage}% HS)`);
 
-                if (type === '2') {
-                    return res.send(lang === 'es'
-                        ? `Última Partida: ${map} - ${result} (${kda})`
-                        : `Last Match: ${map} - ${result} (${kda})`);
-                }
-
-                if (type === '3') {
-                    return res.send(lang === 'es'
-                        ? `Última Partida: ${map} - ${result} (${kda} - ${hsPercentage}% HS)`
-                        : `Last Match: ${map} - ${result} (${kda} - ${hsPercentage}% HS)`);
-                }
-
-                return res.send(lang === 'es'
-                    ? `Última Partida: ${map} - ${result} (${kda})`
-                    : `Last Match: ${map} - ${result} (${kda})`);
+                return res.send(`${prefix}: ${map} - ${result} (${kda})`);
             }
 
             res.json({
