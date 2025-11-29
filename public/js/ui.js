@@ -118,9 +118,19 @@ function renderChart(history) {
     const labels = history.map(h => h.map);
     const dataPoints = history.map(h => h.elo);
 
+    const styles = getComputedStyle(document.documentElement);
+    const accentColor = styles.getPropertyValue('--accent-color').trim();
+
+    const hexToRgba = (hex, alpha) => {
+        const r = parseInt(hex.slice(1, 3), 16);
+        const g = parseInt(hex.slice(3, 5), 16);
+        const b = parseInt(hex.slice(5, 7), 16);
+        return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+    };
+
     const gradient = ctx.createLinearGradient(0, 0, 0, 400);
-    gradient.addColorStop(0, 'rgba(255, 70, 85, 0.5)');
-    gradient.addColorStop(1, 'rgba(255, 70, 85, 0)');
+    gradient.addColorStop(0, hexToRgba(accentColor, 0.5));
+    gradient.addColorStop(1, hexToRgba(accentColor, 0));
 
     mmrChartInstance = new Chart(ctx, {
         type: 'line',
@@ -129,11 +139,11 @@ function renderChart(history) {
             datasets: [{
                 label: 'ELO',
                 data: dataPoints,
-                borderColor: '#ff4655',
+                borderColor: accentColor,
                 backgroundColor: gradient,
                 borderWidth: 2,
                 pointBackgroundColor: '#fff',
-                pointBorderColor: '#ff4655',
+                pointBorderColor: accentColor,
                 pointRadius: 4,
                 pointHoverRadius: 6,
                 fill: true,
