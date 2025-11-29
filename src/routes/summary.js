@@ -1,19 +1,22 @@
 const express = require('express');
 const router = express.Router();
 const { getPUUID, getMMRByPUUID, getMatchesByPUUID, getMMRHistoryByPUUID } = require('../utils/henrikApi');
+const { LRUCache } = require('lru-cache');
 const { formatRankData, formatMatchData, formatHistoryData } = require('../utils/formatters');
 
-const CACHE_TTL = 300 * 1000;
-const summaryCache = new Map();
+const summaryCache = new LRUCache({
+    max: 500,
+    ttl: 300 * 1000,
+});
 
 router.get('/:region/:name/:tag', async (req, res) => {
     const { region, name, tag } = req.params;
     const cacheKey = `${region.toLowerCase()}:${name.toLowerCase()}:${tag.toLowerCase()}`;
 
     const cached = summaryCache.get(cacheKey);
-    if (cached && (Date.now() - cached.timestamp < CACHE_TTL)) {
+    if (cached) {
         console.log(`[CACHE HIT] ${cacheKey}`);
-        return res.json(cached.data);
+        return res.json(cached);
     }
 
     try {
@@ -56,10 +59,7 @@ router.get('/:region/:name/:tag', async (req, res) => {
             data: responseData
         };
 
-        summaryCache.set(cacheKey, {
-            timestamp: Date.now(),
-            data: finalResponse
-        });
+        summaryCache.set(cacheKey, finalResponse);
 
         res.json(finalResponse);
 
