@@ -1,4 +1,4 @@
-const translations = {
+export const translations = {
     en: {
         title: 'LOSPERRIS <span class="accent">VALORANT API</span>',
         subtitle: 'Rank, History & Commands for Streamers',
@@ -34,7 +34,8 @@ const translations = {
         errorServer: 'Server error. Try again later.',
         footerCreated: 'Created by <a href="https://www.instagram.com/ponss_jean/" target="_blank">Ponss17</a>',
         footerOtherApi: 'Check my other Api <a href="https://www.losperris.site/" target="_blank" class="highlight-link">LosPerris Followage API</a>',
-        footerDisclaimer: 'LosPerris Valorant API is not endorsed by Riot Games and does not reflect the views or opinions of Riot Games or anyone officially involved in producing or managing Riot Games properties. Riot Games and all associated properties are trademarks or registered trademarks of Riot Games, Inc.'
+        footerDisclaimer: 'LosPerris Valorant API is not endorsed by Riot Games and does not reflect the views or opinions of Riot Games or anyone officially involved in producing or managing Riot Games properties. Riot Games and all associated properties are trademarks or registered trademarks of Riot Games, Inc.',
+        exampleLabel: 'Example:'
     },
     es: {
         title: 'LOSPERRIS <span class="accent">VALORANT API</span>',
@@ -65,13 +66,14 @@ const translations = {
         docsTitle: 'Documentación de la API',
         docsDescRank: 'devuelve el rango, elo y mmr data.',
         docsDescMatch: 'devuelve data de la ultima partida competitiva.',
-        docsNote: 'agrega <code>?format=text</code> a cualquier endpoint para una respuesta en texto plano.',
+        docsNote: 'agrega <code>?format=text</code> to any endpoint for a plain text response.',
         errorUserNotFound: 'Jugador no encontrado. Revisa el Riot ID.',
         errorRateLimit: 'Demasiadas peticiones. Espera un poco.',
         errorServer: 'Error del servidor. Intenta más tarde.',
         footerCreated: 'Creado por <a href="https://www.instagram.com/ponss_jean/" target="_blank">Ponss17</a>',
         footerOtherApi: 'Mira mi otra Api <a href="https://www.losperris.site/" target="_blank" class="highlight-link">LosPerris Followage API</a>',
-        footerDisclaimer: 'La API de Valorant de LosPerris no cuenta con el respaldo de Riot Games y no refleja las opiniones ni los puntos de vista de Riot Games ni de ninguna persona involucrada oficialmente en la producción o gestión de propiedades de Riot Games. Riot Games y todas las propiedades asociadas son marcas comerciales o marcas registradas de Riot Games, Inc.'
+        footerDisclaimer: 'La API de Valorant de LosPerris no cuenta con el respaldo de Riot Games y no refleja las opiniones ni los puntos de vista de Riot Games ni de ninguna persona involucrada oficialmente en la producción o gestión de propiedades de Riot Games. Riot Games y todas las propiedades asociadas son marcas comerciales o marcas registradas de Riot Games, Inc.',
+        exampleLabel: 'Ejemplo:'
     },
     rankNames: {
         'Iron': 'Hierro',

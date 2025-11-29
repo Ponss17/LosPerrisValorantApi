@@ -189,12 +189,20 @@
                             <input type="text" id="cmd-rank" readonly>
                             <button class="btn-copy" data-target="cmd-rank">COPY</button>
                         </div>
+                        <div class="example-box">
+                            <span class="example-label">Ejemplo:</span>
+                            <span id="example-rank" class="example-text">...</span>
+                        </div>
                     </div>
                     <div class="command-item">
                         <label id="lbl-cmd-match">!lastmatch</label>
                         <div class="copy-box">
                             <input type="text" id="cmd-match" readonly>
                             <button class="btn-copy" data-target="cmd-match">COPY</button>
+                        </div>
+                        <div class="example-box">
+                            <span class="example-label">Ejemplo:</span>
+                            <span id="example-match" class="example-text">...</span>
                         </div>
                     </div>
                 </section>
@@ -235,8 +243,7 @@
         </footer>
     </div>
 
-    <script src="/valorantapi/translations.js"></script>
-    <script src="/valorantapi/script.js"></script>
+    <script type="module" src="/valorantapi/js/main.js"></script>
 </body>
 
 </html>

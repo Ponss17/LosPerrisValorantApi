@@ -341,14 +341,14 @@ option {
 }
 
 .map-name {
-    font-family: var(--font-header);
-    font-size: 1.2rem;
-    color: var(--accent-color);
+    border-radius: 2px;
+    font-size: 0.9rem;
 }
 
 .match-date {
     font-size: 0.85rem;
-    color: var(--text-muted);
+    color: white;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
 }
 
 .match-result {
@@ -401,6 +401,7 @@ option {
     font-family: var(--font-header);
     font-size: 1.8rem;
     color: white;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
 }
 
 .chart-card {
@@ -659,4 +660,29 @@ footer a:hover {
     .stats {
         justify-content: center;
     }
+}
+
+.example-box {
+    margin-top: 10px;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.05);
+    border-left: 3px solid var(--success);
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.example-label {
+    font-weight: bold;
+    color: var(--success);
+    text-transform: uppercase;
+    font-size: 0.8rem;
+}
+
+.example-text {
+    font-family: monospace;
+    color: white;
+    word-break: break-all;
 }
