@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { getPUUID, getMatchesByPUUID } = require('../utils/henrikApi');
+const { getPUUID, getMatchesByPUUID, getMMRByPUUID } = require('../utils/henrikApi');
 const { formatMatchData } = require('../utils/formatters');
 
 router.get('/last/:region/:name/:tag', async (req, res) => {
@@ -15,7 +15,10 @@ router.get('/last/:region/:name/:tag', async (req, res) => {
 
         const puuid = accountData.data.puuid;
 
-        const matchesData = await getMatchesByPUUID(region, puuid, 'competitive');
+        const [matchesData, mmrData] = await Promise.all([
+            getMatchesByPUUID(region, puuid, 'competitive'),
+            getMMRByPUUID(region, puuid)
+        ]);
 
         if (matchesData.status === 200 && matchesData.data.length > 0) {
             const lastMatch = matchesData.data[0];
@@ -41,11 +44,24 @@ router.get('/last/:region/:name/:tag', async (req, res) => {
 
                 const isEs = lang === 'es';
 
-                if (type === '1') return res.send(isEs ? `mi última partida fue en ${map} (${result})` : `${prefix}: ${map} - ${result}`);
-                if (type === '2') return res.send(isEs ? `mi última partida fue en ${map} (${result}) con ${kda}` : `${prefix}: ${map} - ${result} (${kda})`);
-                if (type === '3') return res.send(isEs ? `mi última partida fue en ${map} (${result}) con ${kda} y ${hsPercentage}% HS` : `${prefix}: ${map} - ${result} (${kda} - ${hsPercentage}% HS)`);
+                if (isEs) {
+                    const agent = stats.character;
+                    const resultVerb = isWin ? 'gané' : 'perdí';
+                    const mmrChange = (mmrData.status === 200) ? mmrData.data.current_data.mmr_change_to_last_game : 0;
+                    const pointsMsg = `${mmrChange} puntos`;
 
-                return res.send(isEs ? `mi última partida fue en ${map} (${result}) con ${kda}` : `${prefix}: ${map} - ${result} (${kda})`);
+                    if (type === '1') return res.send(`Mi última partida fue en ${map} con ${agent} ${resultVerb} ${pointsMsg}`);
+                    if (type === '2') return res.send(`Mi última partida fue en ${map} con ${agent} ${resultVerb} ${pointsMsg} (${kda})`);
+                    if (type === '3') return res.send(`Mi última partida fue en ${map} con ${agent} ${resultVerb} ${pointsMsg} (${kda} y ${hsPercentage}% HS)`);
+
+                    return res.send(`Mi última partida fue en ${map} con ${agent} ${resultVerb} ${pointsMsg} (${kda})`);
+                }
+
+                if (type === '1') return res.send(`${prefix}: ${map} - ${result}`);
+                if (type === '2') return res.send(`${prefix}: ${map} - ${result} (${kda})`);
+                if (type === '3') return res.send(`${prefix}: ${map} - ${result} (${kda} - ${hsPercentage}% HS)`);
+
+                return res.send(`${prefix}: ${map} - ${result} (${kda})`);
             }
 
             res.json({

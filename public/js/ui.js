@@ -257,12 +257,22 @@ function updateExamplePreviews(data, botLang, botType, botMatchType) {
     let rankName = formatRankName(r.rank, botLang);
 
     let rankText = '';
-    if (botType === '1') {
-        rankText = `${rankName}`;
-    } else if (botType === '2') {
-        rankText = `${rankName} - ${r.ranking_in_tier}RR`;
+    if (botLang === 'es') {
+        if (botType === '1') {
+            rankText = `actualmente estoy en ${rankName}`;
+        } else if (botType === '2') {
+            rankText = `actualmente estoy en ${rankName} con ${r.ranking_in_tier} puntos`;
+        } else {
+            rankText = `actualmente estoy en ${rankName} con ${r.ranking_in_tier} puntos, mi mmr es de ${r.elo}`;
+        }
     } else {
-        rankText = `${rankName} - ${r.ranking_in_tier}RR - ${r.elo} ELO`;
+        if (botType === '1') {
+            rankText = `${rankName}`;
+        } else if (botType === '2') {
+            rankText = `${rankName} - ${r.ranking_in_tier}RR`;
+        } else {
+            rankText = `${rankName} - ${r.ranking_in_tier}RR - ${r.elo} ELO`;
+        }
     }
     document.getElementById('example-rank').textContent = rankText;
 
@@ -279,12 +289,27 @@ function updateExamplePreviews(data, botLang, botType, botMatchType) {
         const hs = m.derived.hs_percent;
 
         let matchText = '';
-        if (botMatchType === '1') {
-            matchText = `${map} - ${result}`;
-        } else if (botMatchType === '2') {
-            matchText = `${map} - ${result} - ${kda}`;
+        if (botLang === 'es') {
+            const agent = m.derived.agent_name;
+            const resultVerb = isWin ? 'gané' : 'perdí';
+            const mmrChange = r.mmr_change;
+            const pointsMsg = `${mmrChange} puntos`;
+
+            if (botMatchType === '1') {
+                matchText = `mi última partida fue en ${map} con ${agent} ${resultVerb} ${pointsMsg}`;
+            } else if (botMatchType === '2') {
+                matchText = `mi última partida fue en ${map} con ${agent} ${resultVerb} ${pointsMsg} (${kda})`;
+            } else {
+                matchText = `mi última partida fue en ${map} con ${agent} ${resultVerb} ${pointsMsg} (${kda} y ${hs}% HS)`;
+            }
         } else {
-            matchText = `${map} - ${result} - ${kda} - ${hs}% HS`;
+            if (botMatchType === '1') {
+                matchText = `${map} - ${result}`;
+            } else if (botMatchType === '2') {
+                matchText = `${map} - ${result} - ${kda}`;
+            } else {
+                matchText = `${map} - ${result} - ${kda} - ${hs}% HS`;
+            }
         }
         document.getElementById('example-match').textContent = matchText;
     }

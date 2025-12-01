@@ -30,9 +30,9 @@ router.get('/:region/:name/:tag', async (req, res) => {
 
                 const isEs = lang === 'es';
 
-                if (type === '1') return res.send(isEs ? `actualmente estoy en ${rank}` : `Current Rank: ${rank}`);
-                if (type === '2') return res.send(isEs ? `actualmente estoy en ${rank} con ${rr} puntos` : `Current Rank: ${rank} - ${rr} RR`);
-                if (type === '3') return res.send(isEs ? `actualmente estoy en ${rank} con ${rr} puntos, mi mmr es de ${elo}` : `Current Rank: ${rank} - ${rr} RR (${elo} ELO)`);
+                if (type === '1') return res.send(isEs ? `Actualmente estoy en ${rank}` : `Current Rank: ${rank}`);
+                if (type === '2') return res.send(isEs ? `Actualmente estoy en ${rank} con ${rr} puntos` : `Current Rank: ${rank} - ${rr} RR`);
+                if (type === '3') return res.send(isEs ? `Actualmente estoy en ${rank} con ${rr} puntos, mi mmr es de ${elo}` : `Current Rank: ${rank} - ${rr} RR (${elo} ELO)`);
 
                 return res.send(`${user}: ${rank} - ${rr} RR`);
             }

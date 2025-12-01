@@ -39,8 +39,20 @@ Personaliza la respuesta del bot en la sección **"Configuración del Bot"**:
     - *Rango + Puntos*: "Gold 1 - 50 RR"
     - *Completo*: "Gold 1 - 50 RR (1200 ELO)"
 
-### 3. ¡Copia y Pega!
-Copia el código generado en la sección **"Comandos del Bot"** y pégalo en tu chat.
+### 3. Comandos del Bot
+Copia el código generado en la web y pégalo en tu chat.
+
+#### 📝 Ejemplos de Respuesta (Español)
+
+**Comando de Rango (!rank):**
+- *Tipo 1*: "actualmente estoy en Ascendant 1"
+- *Tipo 2*: "actualmente estoy en Ascendant 1 con 50 puntos"
+- *Tipo 3*: "actualmente estoy en Ascendant 1 con 50 puntos, mi mmr es de 1200"
+
+**Comando de Última Partida (!lastmatch):**
+- *Tipo 1*: "mi última partida fue en Ascent con Jett gané 23 puntos"
+- *Tipo 2*: "mi última partida fue en Ascent con Jett gané 23 puntos (13/5/8)"
+- *Tipo 3*: "mi última partida fue en Ascent con Jett gané 23 puntos (13/5/8 y 45.2% HS)"
 
 ---
 
