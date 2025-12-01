@@ -47,9 +47,9 @@ Copia el código generado en la web y pégalo en tu chat.
 - **!rango**: "Actualmente estoy en Diamante 1 con 50 puntos"
 - **!partida**: "Mi última partida fue en Sunset con Cypher gané 17 puntos"
 
-**Inglés (Simplificado):**
-- **!rank**: "Diamond 1 - 50 RR"
-- **!lastmatch**: "Sunset - Win - 13/5/8"
+**Inglés (Natural):**
+- **!rank**: "Currently I am in Diamond 1 with 50 RR"
+- **!lastmatch**: "My last match was on Sunset with Cypher won 17 RR"
 
 ---
 

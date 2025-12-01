@@ -4,18 +4,15 @@ function formatRankText(rank, rr, elo, user, lang, type) {
     const isEs = lang === 'es';
     const translatedRank = translateRank(rank, lang);
 
-    if (type === '1') return isEs ? `Actualmente estoy en ${translatedRank}` : `${translatedRank}`;
-    if (type === '2') return isEs ? `Actualmente estoy en ${translatedRank} con ${rr} puntos` : `${translatedRank} - ${rr} RR`;
-    if (type === '3') return isEs ? `Actualmente estoy en ${translatedRank} con ${rr} puntos, mi mmr es de ${elo}` : `${translatedRank} - ${rr} RR - ${elo} ELO`;
+    if (type === '1') return isEs ? `Actualmente estoy en ${translatedRank}` : `Currently I am in ${translatedRank}`;
+    if (type === '2') return isEs ? `Actualmente estoy en ${translatedRank} con ${rr} puntos` : `Currently I am in ${translatedRank} with ${rr} RR`;
+    if (type === '3') return isEs ? `Actualmente estoy en ${translatedRank} con ${rr} puntos, mi mmr es de ${elo}` : `Currently I am in ${translatedRank} with ${rr} RR, my mmr is ${elo}`;
 
     return `${user}: ${translatedRank} - ${rr} RR`;
 }
 
 function formatMatchText(map, isWin, kda, hsPercentage, agent, mmrChange, lang, type) {
     const isEs = lang === 'es';
-    const result = isEs
-        ? (isWin ? 'Victoria' : 'Derrota')
-        : (isWin ? 'Win' : 'Loss');
 
     if (isEs) {
         const resultVerb = isWin ? 'gané' : 'perdí';
@@ -28,11 +25,14 @@ function formatMatchText(map, isWin, kda, hsPercentage, agent, mmrChange, lang, 
         return `Mi última partida fue en ${map} con ${agent} ${resultVerb} ${pointsMsg} (${kda})`;
     }
 
-    if (type === '1') return `${map} - ${result}`;
-    if (type === '2') return `${map} - ${result} - ${kda}`;
-    if (type === '3') return `${map} - ${result} - ${kda} - ${hsPercentage}% HS`;
+    const resultVerb = isWin ? 'won' : 'lost';
+    const pointsMsg = `${mmrChange} RR`;
 
-    return `${map} - ${result} - ${kda}`;
+    if (type === '1') return `My last match was on ${map} with ${agent} ${resultVerb} ${pointsMsg}`;
+    if (type === '2') return `My last match was on ${map} with ${agent} ${resultVerb} ${pointsMsg} my kda was ${kda}`;
+    if (type === '3') return `My last match was on ${map} with ${agent} ${resultVerb} ${pointsMsg} my kda was ${kda}, my HS percentage was ${hsPercentage}%`;
+
+    return `My last match was on ${map} with ${agent} ${resultVerb} ${pointsMsg} (${kda})`;
 }
 
 module.exports = { formatRankText, formatMatchText };
