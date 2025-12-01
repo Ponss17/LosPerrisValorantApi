@@ -51,8 +51,8 @@ router.get('/last/:region/:name/:tag', async (req, res) => {
                     const pointsMsg = `${mmrChange} puntos`;
 
                     if (type === '1') return res.send(`Mi última partida fue en ${map} con ${agent} ${resultVerb} ${pointsMsg}`);
-                    if (type === '2') return res.send(`Mi última partida fue en ${map} con ${agent} ${resultVerb} ${pointsMsg} (${kda})`);
-                    if (type === '3') return res.send(`Mi última partida fue en ${map} con ${agent} ${resultVerb} ${pointsMsg} (${kda} y ${hsPercentage}% HS)`);
+                    if (type === '2') return res.send(`Mi última partida fue en ${map} con ${agent} ${resultVerb} ${pointsMsg} mi kda fue de ${kda}`);
+                    if (type === '3') return res.send(`Mi última partida fue en ${map} con ${agent} ${resultVerb} ${pointsMsg} mi kda fue de ${kda} y mi porcentaje de HS fue de ${hsPercentage}% HS`);
 
                     return res.send(`Mi última partida fue en ${map} con ${agent} ${resultVerb} ${pointsMsg} (${kda})`);
                 }

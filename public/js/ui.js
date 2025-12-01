@@ -259,11 +259,11 @@ function updateExamplePreviews(data, botLang, botType, botMatchType) {
     let rankText = '';
     if (botLang === 'es') {
         if (botType === '1') {
-            rankText = `actualmente estoy en ${rankName}`;
+            rankText = `Actualmente estoy en ${rankName}`;
         } else if (botType === '2') {
-            rankText = `actualmente estoy en ${rankName} con ${r.ranking_in_tier} puntos`;
+            rankText = `Actualmente estoy en ${rankName} con ${r.ranking_in_tier} puntos`;
         } else {
-            rankText = `actualmente estoy en ${rankName} con ${r.ranking_in_tier} puntos, mi mmr es de ${r.elo}`;
+            rankText = `Actualmente estoy en ${rankName} con ${r.ranking_in_tier} puntos, mi mmr es de ${r.elo}`;
         }
     } else {
         if (botType === '1') {
@@ -296,11 +296,11 @@ function updateExamplePreviews(data, botLang, botType, botMatchType) {
             const pointsMsg = `${mmrChange} puntos`;
 
             if (botMatchType === '1') {
-                matchText = `mi última partida fue en ${map} con ${agent} ${resultVerb} ${pointsMsg}`;
+                matchText = `Mi última partida fue en ${map} con ${agent} ${resultVerb} ${pointsMsg}`;
             } else if (botMatchType === '2') {
-                matchText = `mi última partida fue en ${map} con ${agent} ${resultVerb} ${pointsMsg} (${kda})`;
+                matchText = `Mi última partida fue en ${map} con ${agent} ${resultVerb} ${pointsMsg} mi kda fue de ${kda}`;
             } else {
-                matchText = `mi última partida fue en ${map} con ${agent} ${resultVerb} ${pointsMsg} (${kda} y ${hs}% HS)`;
+                matchText = `Mi última partida fue en ${map} con ${agent} ${resultVerb} ${pointsMsg} mi kda fue de ${kda} y mi porcentaje de HS fue de ${hs}% HS`;
             }
         } else {
             if (botMatchType === '1') {
