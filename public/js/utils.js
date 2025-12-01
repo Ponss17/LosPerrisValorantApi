@@ -40,5 +40,5 @@ function formatMatchResult(isWin, lang) {
     if (lang === 'es') {
         return isWin ? 'VICTORIA' : 'DERROTA';
     }
-    return isWin ? 'WIN' : 'LOSS';
+    return isWin ? 'VICTORY' : 'DEFEAT';
 }
