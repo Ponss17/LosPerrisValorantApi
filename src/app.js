@@ -21,7 +21,7 @@ app.use(helmet({
             styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
             fontSrc: ["'self'", "https://fonts.gstatic.com"],
             imgSrc: ["'self'", "data:", "https://media.valorant-api.com"],
-            connectSrc: ["'self'", "https://api.henrikdev.xyz"],
+            connectSrc: ["'self'", "https://api.henrikdev.xyz", "https://valorant-api.com"],
             objectSrc: ["'none'"]
         }
     }
