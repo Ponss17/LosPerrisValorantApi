@@ -8,7 +8,7 @@ router.get('/last/:region/:name/:tag', async (req, res) => {
     const { region, name, tag } = req.params;
 
     try {
-        const accountData = await getAccountData(name, tag, res);
+        const accountData = await getAccountData(name, tag, req, res);
         if (!accountData) return;
 
         const puuid = accountData.data.puuid;
@@ -78,7 +78,7 @@ router.get('/last/:region/:name/:tag', async (req, res) => {
         }
 
     } catch (error) {
-        handleRouteError(res, error);
+        handleRouteError(req, res, error);
     }
 });
 
