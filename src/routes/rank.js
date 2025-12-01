@@ -5,7 +5,9 @@ const { getAccountData, handleRouteError, translateRank } = require('../utils/he
 const { formatRankData } = require('../utils/formatters');
 const { formatRankText } = require('../utils/textFormatters');
 
-router.get('/:region/:name/:tag', async (req, res) => {
+const { commonValidations } = require('../middleware/validators');
+
+router.get('/:region/:name/:tag', commonValidations, async (req, res) => {
     const { region, name, tag } = req.params;
 
     try {

@@ -9,7 +9,9 @@ const summaryCache = new LRUCache({
     ttl: 300 * 1000,
 });
 
-router.get('/:region/:name/:tag', async (req, res) => {
+const { commonValidations } = require('../middleware/validators');
+
+router.get('/:region/:name/:tag', commonValidations, async (req, res) => {
     const { region, name, tag } = req.params;
     const cacheKey = `${region.toLowerCase()}:${name.toLowerCase()}:${tag.toLowerCase()}`;
 

@@ -4,7 +4,9 @@ const { getMMRHistoryByPUUID } = require('../utils/henrikApi');
 const { getAccountData, handleRouteError } = require('../utils/helpers');
 const { formatHistoryData } = require('../utils/formatters');
 
-router.get('/:region/:name/:tag', async (req, res) => {
+const { commonValidations } = require('../middleware/validators');
+
+router.get('/:region/:name/:tag', commonValidations, async (req, res) => {
     const { region, name, tag } = req.params;
 
     try {
