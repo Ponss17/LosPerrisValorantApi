@@ -1,17 +1,15 @@
 const express = require('express');
 const router = express.Router();
-const { getPUUID, getMatchesByPUUID, getMMRByPUUID } = require('../utils/henrikApi');
+const { getMatchesByPUUID, getMMRByPUUID } = require('../utils/henrikApi');
+const { getAccountData, handleRouteError } = require('../utils/helpers');
 const { formatMatchData } = require('../utils/formatters');
 
 router.get('/last/:region/:name/:tag', async (req, res) => {
     const { region, name, tag } = req.params;
 
     try {
-        const accountData = await getPUUID(name, tag);
-
-        if (accountData.status !== 200) {
-            return res.status(accountData.status).json(accountData);
-        }
+        const accountData = await getAccountData(name, tag, res);
+        if (!accountData) return;
 
         const puuid = accountData.data.puuid;
 
@@ -80,7 +78,7 @@ router.get('/last/:region/:name/:tag', async (req, res) => {
         }
 
     } catch (error) {
-        res.status(error.status || 500).json(error.data || { message: error.message });
+        handleRouteError(res, error);
     }
 });
 
