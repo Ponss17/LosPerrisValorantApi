@@ -4,9 +4,9 @@ let currentConfigMode = 'rank';
 const MAX_RECENT_SEARCHES = 3;
 
 document.addEventListener('DOMContentLoaded', () => {
+    renderRecentSearchesMain();
     updateLanguageUI(currentLang);
     updateCommandsUI(null);
-    renderRecentSearchesMain();
 });
 
 document.querySelectorAll('.lang-btn').forEach(btn => {

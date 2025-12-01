@@ -229,6 +229,9 @@ function renderRecentSearches(searches, onSearchClick) {
 }
 
 function updateCommandsUI(fullSummaryData) {
+    const botLang = document.getElementById('bot-lang').value;
+    updateBotCommandLabels(botLang);
+
     if (!fullSummaryData) return;
 
     const region = document.getElementById('region').value;
@@ -236,7 +239,6 @@ function updateCommandsUI(fullSummaryData) {
     const tag = document.getElementById('tag').value;
 
     const botPlatform = document.getElementById('bot-platform').value;
-    const botLang = document.getElementById('bot-lang').value;
     const botType = document.getElementById('bot-type').value;
     const botMatchType = document.getElementById('bot-match-type').value;
 
