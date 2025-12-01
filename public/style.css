@@ -144,7 +144,17 @@ label {
     text-transform: uppercase;
 }
 
-input,
+input {
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--card-border);
+    padding: 12px;
+    color: white;
+    font-family: var(--font-main);
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
 select {
     background: var(--accent-color);
     border: 1px solid var(--card-border);
