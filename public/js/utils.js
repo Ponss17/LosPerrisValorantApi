@@ -42,10 +42,3 @@ function formatMatchResult(isWin, lang) {
     }
     return isWin ? 'WIN' : 'LOSS';
 }
-
-function formatMatchResultShort(isWin, lang) {
-    if (lang === 'es') {
-        return isWin ? 'Victoria' : 'Derrota';
-    }
-    return isWin ? 'Win' : 'Loss';
-}
