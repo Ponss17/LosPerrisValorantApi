@@ -4,6 +4,8 @@
 ![Node](https://img.shields.io/badge/node-%3E%3D14.0.0-brightgreen.svg)
 ![Status](https://img.shields.io/badge/status-active-success.svg)
 
+![LosPerris Valorant API](public/imgs/ej/principal.webp)
+
 > **Hub para comandos de Valorant.**
 > Diseñado para streamers, esta herramienta permite generar comandos personalizados para tu chat (Nightbot, StreamElements, Botrix, etc.) sin tocar una sola línea de código.
 
@@ -28,12 +30,18 @@ No necesitas instalar nada. Todo funciona directamente desde la web.
 
 ### 1. Busca tu Perfil
 Ingresa tu **Riot ID** y **Tag** (ej. `PonssLoveless #8882`) y selecciona tu región.
+
+![Datos del Jugador](public/imgs/ej/datos.webp)
+
 - **Rango Actual**: ELO y RR traducidos.
 - **Última Partida**: Resultado, KDA, HS% y fecha.
 - **Gráfico**: Historial de MMR.
 
 ### 2. Configura tu Bot
 Personaliza la respuesta del bot en la sección **"Configuración del Bot"**:
+
+![Configuración de Bots](public/imgs/ej/bots.webp)
+
 - **Plataforma**: Nightbot, StreamElements, Botrix, Fossabot, Streamlabs.
 - **Idioma**: Español o Inglés.
 - **Formato**: Elige qué información mostrar (Solo Rango, con Puntos, con ELO, KDA, HS%, etc.).
@@ -42,6 +50,8 @@ Personaliza la respuesta del bot en la sección **"Configuración del Bot"**:
 Copia el código generado en la web y pégalo en tu chat.
 
 #### 📝 Ejemplos de Respuesta
+
+![Ejemplo en Chat](public/imgs/ej/ejemplo-de-uso.webp)
 
 **Español (Natural):**
 - **!rango**: "Actualmente estoy en Diamante 1 con 50 puntos"
@@ -66,6 +76,8 @@ Copia el código generado en la web y pégalo en tu chat.
 ---
 
 ## 🛠️ API Endpoints (Para Desarrolladores)
+
+![Documentación](public/imgs/ej/documentacion.webp)
 
 Si eres desarrollador, puedes usar la API directamente. Añade `?format=text` para respuestas en texto plano.
 
