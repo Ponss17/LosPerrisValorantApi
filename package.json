@@ -1,5 +1,5 @@
 {
-  "name": "valorant-api",
+  "name": "losperris-valorant-api",
   "version": "1.0.0",
   "main": "api/index.js",
   "scripts": {
@@ -9,16 +9,25 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Ponss17/Jeanapi.git"
+    "url": "git+https://github.com/Ponss17/LosPerrisValorantApi.git"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "valorant",
+    "api",
+    "twitch",
+    "bot",
+    "rank",
+    "mmr",
+    "nightbot",
+    "streamelements"
+  ],
+  "author": "Ponss17",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Ponss17/Jeanapi/issues"
+    "url": "https://github.com/Ponss17/LosPerrisValorantApi/issues"
   },
-  "homepage": "https://github.com/Ponss17/Jeanapi#readme",
-  "description": "",
+  "homepage": "https://github.com/Ponss17/LosPerrisValorantApi#readme",
+  "description": "API de Valorant para obtener rangos, historial y comandos para bots de Twitch.",
   "dependencies": {
     "axios": "^1.13.2",
     "cors": "^2.8.5",
