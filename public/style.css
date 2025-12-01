@@ -146,7 +146,7 @@ label {
 
 input,
 select {
-    background: rgba(0, 0, 0, 0.2);
+    background: var(--accent-color);
     border: 1px solid var(--card-border);
     padding: 12px;
     color: white;
@@ -158,7 +158,7 @@ select {
 
 input:focus,
 select:focus {
-    border-color: var(--accent-color);
+    border-color: white;
 }
 
 option {
@@ -611,6 +611,31 @@ footer a:hover {
     background: rgba(255, 255, 255, 0.05);
 }
 
+.example-box {
+    margin-top: 10px;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.05);
+    border-left: 3px solid var(--success);
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.example-label {
+    font-weight: bold;
+    color: var(--success);
+    text-transform: uppercase;
+    font-size: 0.8rem;
+}
+
+.example-text {
+    font-family: monospace;
+    color: white;
+    word-break: break-all;
+}
+
 @keyframes fadeInUp {
     from {
         opacity: 0;
@@ -627,13 +652,18 @@ footer a:hover {
     animation: fadeInUp 0.5s ease-out forwards;
 }
 
+/* Mobile Optimizations */
 @media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+
     h1 {
-        font-size: 2.5rem;
+        font-size: 2rem;
     }
 
     .card-content {
-        padding: 20px;
+        padding: 15px;
     }
 
     .card-header {
@@ -658,32 +688,32 @@ footer a:hover {
         gap: 15px;
     }
 
-    .stats {
-        justify-content: center;
+    .match-stats-row {
+        flex-wrap: wrap;
+        gap: 15px;
     }
-}
 
-.example-box {
-    margin-top: 10px;
-    padding: 10px;
-    background: rgba(255, 255, 255, 0.05);
-    border-left: 3px solid var(--success);
-    font-size: 0.9rem;
-    color: var(--text-muted);
-    display: flex;
-    gap: 10px;
-    align-items: center;
-}
+    .stat-group {
+        flex: 1 1 40%;
+    }
 
-.example-label {
-    font-weight: bold;
-    color: var(--success);
-    text-transform: uppercase;
-    font-size: 0.8rem;
-}
+    .example-box {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+    }
 
-.example-text {
-    font-family: monospace;
-    color: white;
-    word-break: break-all;
+    .copy-box {
+        flex-direction: column;
+    }
+
+    .copy-box input {
+        border-bottom: 1px solid var(--card-border);
+        border-right: none;
+    }
+
+    .btn-copy {
+        width: 100%;
+        padding: 10px;
+    }
 }
