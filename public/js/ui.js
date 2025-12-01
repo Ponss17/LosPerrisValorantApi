@@ -268,77 +268,60 @@ function updateBotCommandLabels(botLang) {
     }
 }
 
-function updateExamplePreviews(data, botLang, botType, botMatchType) {
+async function updateExamplePreviews(data, botLang, botType, botMatchType) {
     const r = data.data.rank;
-    let rankName = formatRankName(r.rank, botLang);
-
-    if (botLang === 'es') {
-        const parts = rankName.split(' ');
-        const name = parts[0];
-        const tier = parts[1] || '';
-        const translatedName = translations.rankNames[name] || name;
-        rankName = tier ? `${translatedName} ${tier}` : translatedName;
-    }
-
-    let rankText = '';
-    if (botLang === 'es') {
-        if (botType === '1') {
-            rankText = `Actualmente estoy en ${rankName}`;
-        } else if (botType === '2') {
-            rankText = `Actualmente estoy en ${rankName} con ${r.ranking_in_tier} puntos`;
-        } else {
-            rankText = `Actualmente estoy en ${rankName} con ${r.ranking_in_tier} puntos, mi mmr es de ${r.elo}`;
-        }
-    } else {
-        if (botType === '1') {
-            rankText = `Currently I am in ${rankName}`;
-        } else if (botType === '2') {
-            rankText = `Currently I am in ${rankName} with ${r.ranking_in_tier} RR`;
-        } else {
-            rankText = `Currently I am in ${rankName} with ${r.ranking_in_tier} RR, my mmr is ${r.elo}`;
-        }
-    }
-    document.getElementById('example-rank').textContent = rankText;
-
     const m = data.data.match;
+
+    try {
+        const response = await fetch(`${apiBase}/preview`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                type: 'rank',
+                lang: botLang,
+                botType: botType,
+                data: {
+                    rank: r.rank,
+                    rr: r.ranking_in_tier,
+                    elo: r.elo,
+                    name: r.name,
+                    tag: r.tag
+                }
+            })
+        });
+        const result = await response.json();
+        document.getElementById('example-rank').textContent = result.text;
+    } catch (e) {
+        console.error('Preview Error (Rank):', e);
+    }
+
     if (m) {
-        const meta = m.metadata;
-        const stats = m.players.all_players.find(p => p.puuid === r.puuid);
-        const isWin = m.teams.red.has_won ? (stats.team === 'Red') : (stats.team === 'Blue');
+        try {
+            const stats = m.players.all_players.find(p => p.puuid === r.puuid);
+            const isWin = m.teams.red.has_won ? (stats.team === 'Red') : (stats.team === 'Blue');
 
-        const kda = `${stats.stats.kills}/${stats.stats.deaths}/${stats.stats.assists}`;
-        const map = meta.map;
-        const hs = m.derived.hs_percent;
-
-        let matchText = '';
-        if (botLang === 'es') {
-            const agent = m.derived.agent_name;
-            const resultVerb = isWin ? 'gané' : 'perdí';
-            const mmrChange = r.mmr_change;
-            const pointsMsg = `${mmrChange} puntos`;
-
-            if (botMatchType === '1') {
-                matchText = `Mi última partida fue en ${map} con ${agent} ${resultVerb} ${pointsMsg}`;
-            } else if (botMatchType === '2') {
-                matchText = `Mi última partida fue en ${map} con ${agent} ${resultVerb} ${pointsMsg} mi kda fue de ${kda}`;
-            } else {
-                matchText = `Mi última partida fue en ${map} con ${agent} ${resultVerb} ${pointsMsg} mi kda fue de ${kda}, mi porcentaje de HS fue de ${hs}% HS`;
-            }
-        } else {
-            const agent = m.derived.agent_name;
-            const resultVerb = isWin ? 'won' : 'lost';
-            const mmrChange = r.mmr_change;
-            const pointsMsg = `${mmrChange} RR`;
-
-            if (botMatchType === '1') {
-                matchText = `My last match was on ${map} with ${agent} ${resultVerb} ${pointsMsg}`;
-            } else if (botMatchType === '2') {
-                matchText = `My last match was on ${map} with ${agent} ${resultVerb} ${pointsMsg} my kda was ${kda}`;
-            } else {
-                matchText = `My last match was on ${map} with ${agent} ${resultVerb} ${pointsMsg} my kda was ${kda}, my HS percentage was ${hs}%`;
-            }
+            const response = await fetch(`${apiBase}/preview`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    type: 'match',
+                    lang: botLang,
+                    botMatchType: botMatchType,
+                    data: {
+                        map: m.metadata.map,
+                        isWin: isWin,
+                        kda: `${stats.stats.kills}/${stats.stats.deaths}/${stats.stats.assists}`,
+                        hs: m.derived.hs_percent,
+                        agent: m.derived.agent_name,
+                        mmrChange: r.mmr_change
+                    }
+                })
+            });
+            const result = await response.json();
+            document.getElementById('example-match').textContent = result.text;
+        } catch (e) {
+            console.error('Preview Error (Match):', e);
         }
-        document.getElementById('example-match').textContent = matchText;
     }
 }
 

@@ -6,6 +6,7 @@ const rateLimit = require('express-rate-limit');
 const rankRoutes = require('./routes/rank');
 const matchRoutes = require('./routes/match');
 const historyRoutes = require('./routes/history');
+const previewRoutes = require('./routes/preview');
 
 const app = express();
 
@@ -50,5 +51,6 @@ app.use('/rank', rankRoutes);
 app.use('/match', matchRoutes);
 app.use('/history', historyRoutes);
 app.use('/summary', require('./routes/summary'));
+app.use('/preview', previewRoutes);
 
 module.exports = app;
