@@ -31,14 +31,21 @@ function formatMatchData(matchData, puuid) {
     const mapUuid = MAP_UUIDS[mapName];
     const mapImage = mapUuid ? `https://media.valorant-api.com/maps/${mapUuid}/splash.png` : null;
 
+    const isWin = matchData.teams.red.has_won ? (stats.team === 'Red') : (stats.team === 'Blue');
+    const kda = `${stats.stats.kills}/${stats.stats.deaths}/${stats.stats.assists}`;
+
+
     return {
         ...matchData,
         derived: {
+            is_win: isWin,
+            kda: kda,
             hs_percent: hsPercentage,
             agent_name: agentName,
             agent_icon: agentIcon,
             agent_image: agentImage,
-            map_image: mapImage
+            map_image: mapImage,
+            map_name: mapName
         }
     };
 }

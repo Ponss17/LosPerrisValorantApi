@@ -47,4 +47,22 @@ function translateRank(rankName, lang) {
     return tier ? `${translatedName} ${tier}` : translatedName;
 }
 
-module.exports = { getAccountData, handleRouteError, translateRank };
+function sendResponse(req, res, data, textFormatter, extraData = null) {
+    if (req.query.format === 'text') {
+        const lang = req.query.lang || 'en';
+        const type = req.query.type || '1';
+
+        if (!textFormatter) {
+            return res.status(400).send('Text format not supported for this endpoint');
+        }
+
+        return res.send(textFormatter(data, lang, type, extraData));
+    }
+
+    res.json({
+        status: 200,
+        data: data
+    });
+}
+
+module.exports = { getAccountData, handleRouteError, translateRank, sendResponse };

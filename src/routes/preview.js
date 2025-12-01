@@ -12,14 +12,30 @@ router.post('/', (req, res) => {
     try {
         if (type === 'rank') {
             const { rank, rr, elo, name, tag } = data;
-            const user = `${name}#${tag}`;
-            const text = formatRankText(rank, rr, elo, user, lang, botType);
+            const rankData = {
+                name,
+                tag,
+                rank,
+                ranking_in_tier: rr,
+                elo
+            };
+            const text = formatRankText(rankData, lang, botType);
             return res.json({ text });
         }
 
         if (type === 'match') {
             const { map, isWin, kda, hs, agent, mmrChange } = data;
-            const text = formatMatchText(map, isWin, kda, hs, agent, mmrChange, lang, botMatchType);
+            const matchData = {
+                derived: {
+                    map_name: map,
+                    is_win: isWin,
+                    kda: kda,
+                    hs_percent: hs,
+                    agent_name: agent
+                },
+                mmr_change: mmrChange
+            };
+            const text = formatMatchText(matchData, lang, botMatchType, mmrChange);
             return res.json({ text });
         }
 
