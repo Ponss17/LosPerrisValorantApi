@@ -1,21 +1,19 @@
 const express = require('express');
 const router = express.Router();
 const { getMatchesByPUUID, getMMRByPUUID } = require('../utils/henrikApi');
-const { getAccountData, handleRouteError, sendResponse } = require('../utils/helpers');
+const { handleRouteError, sendResponse } = require('../utils/helpers');
 const { formatMatchData } = require('../utils/formatters');
 const { formatMatchText } = require('../utils/textFormatters');
 
 const { commonValidations } = require('../middleware/validators');
 
-router.get('/last/:region/:name/:tag', commonValidations, async (req, res) => {
-    const { region, name, tag } = req.params;
+const { withAccountData } = require('../middleware/account');
+
+router.get('/last/:region/:name/:tag', commonValidations, withAccountData, async (req, res) => {
+    const { region } = req.params;
+    const { accountData, puuid } = req;
 
     try {
-        const accountData = await getAccountData(name, tag, req, res);
-        if (!accountData) return;
-
-        const puuid = accountData.data.puuid;
-
         const [matchesData, mmrData] = await Promise.all([
             getMatchesByPUUID(region, puuid, 'competitive'),
             getMMRByPUUID(region, puuid)

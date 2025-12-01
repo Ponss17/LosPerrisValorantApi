@@ -10,6 +10,14 @@ function getApiKey() {
     return apiKey;
 }
 
+function handleApiError(error) {
+    if (error.response) {
+        throw { status: error.response.status, data: error.response.data };
+    } else {
+        throw { status: 500, message: 'Internal Server Error', error: error.message };
+    }
+}
+
 async function getAccount(name, tag) {
     try {
         const response = await axios.get(`${BASE_URL}/v1/account/${name}/${tag}`, {
@@ -20,11 +28,7 @@ async function getAccount(name, tag) {
         });
         return response.data;
     } catch (error) {
-        if (error.response) {
-            throw { status: error.response.status, data: error.response.data };
-        } else {
-            throw { status: 500, message: 'Internal Server Error', error: error.message };
-        }
+        handleApiError(error);
     }
 }
 
@@ -38,11 +42,7 @@ async function getMMRByPUUID(region, puuid) {
         });
         return response.data;
     } catch (error) {
-        if (error.response) {
-            throw { status: error.response.status, data: error.response.data };
-        } else {
-            throw { status: 500, message: 'Internal Server Error', error: error.message };
-        }
+        handleApiError(error);
     }
 }
 
@@ -56,11 +56,7 @@ async function getMatchesByPUUID(region, puuid, mode = 'competitive') {
         });
         return response.data;
     } catch (error) {
-        if (error.response) {
-            throw { status: error.response.status, data: error.response.data };
-        } else {
-            throw { status: 500, message: 'Internal Server Error', error: error.message };
-        }
+        handleApiError(error);
     }
 }
 
@@ -76,11 +72,7 @@ async function getMMRHistoryByPUUID(region, puuid) {
         });
         return response.data;
     } catch (error) {
-        if (error.response) {
-            throw { status: error.response.status, data: error.response.data };
-        } else {
-            throw { status: 500, message: 'Internal Server Error', error: error.message };
-        }
+        handleApiError(error);
     }
 }
 

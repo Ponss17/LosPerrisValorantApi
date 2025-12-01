@@ -1,19 +1,18 @@
 const express = require('express');
 const router = express.Router();
 const { getMMRHistoryByPUUID } = require('../utils/henrikApi');
-const { getAccountData, handleRouteError } = require('../utils/helpers');
+const { handleRouteError } = require('../utils/helpers');
 const { formatHistoryData } = require('../utils/formatters');
 
 const { commonValidations } = require('../middleware/validators');
 
-router.get('/:region/:name/:tag', commonValidations, async (req, res) => {
-    const { region, name, tag } = req.params;
+const { withAccountData } = require('../middleware/account');
+
+router.get('/:region/:name/:tag', commonValidations, withAccountData, async (req, res) => {
+    const { region } = req.params;
+    const { puuid } = req;
 
     try {
-        const accountData = await getAccountData(name, tag, req, res);
-        if (!accountData) return;
-
-        const puuid = accountData.data.puuid;
         const historyData = await getMMRHistoryByPUUID(region, puuid);
 
         if (historyData.status === 200) {

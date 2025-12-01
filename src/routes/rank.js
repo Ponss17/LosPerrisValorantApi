@@ -1,21 +1,19 @@
 const express = require('express');
 const router = express.Router();
 const { getMMRByPUUID } = require('../utils/henrikApi');
-const { getAccountData, handleRouteError, translateRank, sendResponse } = require('../utils/helpers');
+const { handleRouteError, translateRank, sendResponse } = require('../utils/helpers');
 const { formatRankData } = require('../utils/formatters');
 const { formatRankText } = require('../utils/textFormatters');
 
 const { commonValidations } = require('../middleware/validators');
 
-router.get('/:region/:name/:tag', commonValidations, async (req, res) => {
-    const { region, name, tag } = req.params;
+const { withAccountData } = require('../middleware/account');
+
+router.get('/:region/:name/:tag', commonValidations, withAccountData, async (req, res) => {
+    const { region } = req.params;
+    const { accountData, puuid } = req;
 
     try {
-        const accountData = await getAccountData(name, tag, req, res);
-        if (!accountData) return;
-
-        const puuid = accountData.data.puuid;
-
         const mmrData = await getMMRByPUUID(region, puuid);
 
         if (mmrData.status === 200) {
