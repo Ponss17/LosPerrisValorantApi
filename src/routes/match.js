@@ -39,11 +39,13 @@ router.get('/last/:region/:name/:tag', async (req, res) => {
                 const map = meta.map;
                 const prefix = (lang === 'es') ? 'Última Partida' : 'Last Match';
 
-                if (type === '1') return res.send(`${prefix}: ${map} - ${result}`);
-                if (type === '2') return res.send(`${prefix}: ${map} - ${result} (${kda})`);
-                if (type === '3') return res.send(`${prefix}: ${map} - ${result} (${kda} - ${hsPercentage}% HS)`);
+                const isEs = lang === 'es';
 
-                return res.send(`${prefix}: ${map} - ${result} (${kda})`);
+                if (type === '1') return res.send(isEs ? `mi última partida fue en ${map} (${result})` : `${prefix}: ${map} - ${result}`);
+                if (type === '2') return res.send(isEs ? `mi última partida fue en ${map} (${result}) con ${kda}` : `${prefix}: ${map} - ${result} (${kda})`);
+                if (type === '3') return res.send(isEs ? `mi última partida fue en ${map} (${result}) con ${kda} y ${hsPercentage}% HS` : `${prefix}: ${map} - ${result} (${kda} - ${hsPercentage}% HS)`);
+
+                return res.send(isEs ? `mi última partida fue en ${map} (${result}) con ${kda}` : `${prefix}: ${map} - ${result} (${kda})`);
             }
 
             res.json({
