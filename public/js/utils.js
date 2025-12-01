@@ -14,6 +14,8 @@ function getCommandSyntax(platform, url) {
             return `$(urlfetch ${url})`;
         case 'streamelements':
             return `\${customapi.${url}}`;
+        case 'botrix':
+            return `$(urlfetch ${url})`;
         case 'fossabot':
             return `$(customapi ${url})`;
         case 'streamlabs':
