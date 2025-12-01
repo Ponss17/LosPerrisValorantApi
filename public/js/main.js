@@ -5,6 +5,7 @@ const MAX_RECENT_SEARCHES = 3;
 
 document.addEventListener('DOMContentLoaded', () => {
     updateLanguageUI(currentLang);
+    updateCommandsUI(null);
     renderRecentSearchesMain();
 });
 

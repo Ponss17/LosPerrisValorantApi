@@ -34,8 +34,7 @@ function updateLanguageUI(lang) {
     document.getElementById('btn-config-match').textContent = t.matchConfig;
 
     document.querySelector('.commands-card h3').textContent = t.botCmds;
-    document.getElementById('lbl-cmd-rank').textContent = t.cmdRank;
-    document.getElementById('lbl-cmd-match').textContent = t.cmdMatch;
+    updateBotCommandLabels(botLang);
 
     document.getElementById('docs-title').textContent = t.docsTitle;
     document.getElementById('docs-desc-rank').textContent = t.docsDescRank;
@@ -250,6 +249,15 @@ function updateCommandsUI(fullSummaryData) {
     document.getElementById('cmd-match').value = getCommandSyntax(botPlatform, matchUrl);
 
     updateExamplePreviews(fullSummaryData, botLang, botType, botMatchType);
+    updateBotCommandLabels(botLang);
+}
+
+function updateBotCommandLabels(botLang) {
+    const t = translations[botLang];
+    if (t) {
+        document.getElementById('lbl-cmd-rank').textContent = t.cmdRank;
+        document.getElementById('lbl-cmd-match').textContent = t.cmdMatch;
+    }
 }
 
 function updateExamplePreviews(data, botLang, botType, botMatchType) {
