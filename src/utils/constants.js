@@ -9,7 +9,8 @@ const MAP_UUIDS = {
     'Pearl': 'fd267378-4d1d-484f-ff52-77821ed10dc2',
     'Icebox': 'e2ad5c54-4114-a870-9641-8ea21279579a',
     'Haven': '2bee0dc9-4ffe-519b-1cbd-7fbe763a6047',
-    'Abyss': '224b0a95-48b9-f703-1bd8-67aca101a61f'
+    'Abyss': '224b0a95-48b9-f703-1bd8-67aca101a61f',
+    'Corrode': '1c18ab1f-420d-0d8b-71d0-77ad3c439115'
 };
 
 module.exports = { MAP_UUIDS };
