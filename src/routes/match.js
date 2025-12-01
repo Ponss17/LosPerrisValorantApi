@@ -3,6 +3,7 @@ const router = express.Router();
 const { getMatchesByPUUID, getMMRByPUUID } = require('../utils/henrikApi');
 const { getAccountData, handleRouteError } = require('../utils/helpers');
 const { formatMatchData } = require('../utils/formatters');
+const { formatMatchText } = require('../utils/textFormatters');
 
 router.get('/last/:region/:name/:tag', async (req, res) => {
     const { region, name, tag } = req.params;
@@ -32,34 +33,12 @@ router.get('/last/:region/:name/:tag', async (req, res) => {
                 const meta = lastMatch.metadata;
                 const isWin = lastMatch.teams.red.has_won ? (stats.team === 'Red') : (stats.team === 'Blue');
 
-                const result = (lang === 'es')
-                    ? (isWin ? 'Victoria' : 'Derrota')
-                    : (isWin ? 'Win' : 'Loss');
-
                 const kda = `${stats.stats.kills}/${stats.stats.deaths}/${stats.stats.assists}`;
                 const map = meta.map;
-                const prefix = (lang === 'es') ? 'Última Partida' : 'Last Match';
+                const agent = stats.character;
+                const mmrChange = (mmrData.status === 200) ? mmrData.data.current_data.mmr_change_to_last_game : 0;
 
-                const isEs = lang === 'es';
-
-                if (isEs) {
-                    const agent = stats.character;
-                    const resultVerb = isWin ? 'gané' : 'perdí';
-                    const mmrChange = (mmrData.status === 200) ? mmrData.data.current_data.mmr_change_to_last_game : 0;
-                    const pointsMsg = `${mmrChange} puntos`;
-
-                    if (type === '1') return res.send(`Mi última partida fue en ${map} con ${agent} ${resultVerb} ${pointsMsg}`);
-                    if (type === '2') return res.send(`Mi última partida fue en ${map} con ${agent} ${resultVerb} ${pointsMsg} mi kda fue de ${kda}`);
-                    if (type === '3') return res.send(`Mi última partida fue en ${map} con ${agent} ${resultVerb} ${pointsMsg} mi kda fue de ${kda}, mi porcentaje de HS fue de ${hsPercentage}% HS`);
-
-                    return res.send(`Mi última partida fue en ${map} con ${agent} ${resultVerb} ${pointsMsg} (${kda})`);
-                }
-
-                if (type === '1') return res.send(`${prefix}: ${map} - ${result}`);
-                if (type === '2') return res.send(`${prefix}: ${map} - ${result} (${kda})`);
-                if (type === '3') return res.send(`${prefix}: ${map} - ${result} (${kda} - ${hsPercentage}% HS)`);
-
-                return res.send(`${prefix}: ${map} - ${result} (${kda})`);
+                return res.send(formatMatchText(map, isWin, kda, hsPercentage, agent, mmrChange, lang, type));
             }
 
             res.json({

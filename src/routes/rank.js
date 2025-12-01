@@ -3,6 +3,7 @@ const router = express.Router();
 const { getMMRByPUUID } = require('../utils/henrikApi');
 const { getAccountData, handleRouteError, translateRank } = require('../utils/helpers');
 const { formatRankData } = require('../utils/formatters');
+const { formatRankText } = require('../utils/textFormatters');
 
 router.get('/:region/:name/:tag', async (req, res) => {
     const { region, name, tag } = req.params;
@@ -21,18 +22,12 @@ router.get('/:region/:name/:tag', async (req, res) => {
             if (req.query.format === 'text') {
                 const lang = req.query.lang || 'en';
                 const type = req.query.type || '1';
-                const rank = translateRank(currentData.currenttierpatched, lang);
+                const rank = currentData.currenttierpatched;
                 const rr = currentData.ranking_in_tier;
                 const elo = currentData.elo;
                 const user = `${accountData.data.name}#${accountData.data.tag}`;
 
-                const isEs = lang === 'es';
-
-                if (type === '1') return res.send(isEs ? `Actualmente estoy en ${rank}` : `Current Rank: ${rank}`);
-                if (type === '2') return res.send(isEs ? `Actualmente estoy en ${rank} con ${rr} puntos` : `Current Rank: ${rank} - ${rr} RR`);
-                if (type === '3') return res.send(isEs ? `Actualmente estoy en ${rank} con ${rr} puntos, mi mmr es de ${elo}` : `Current Rank: ${rank} - ${rr} RR (${elo} ELO)`);
-
-                return res.send(`${user}: ${rank} - ${rr} RR`);
+                return res.send(formatRankText(rank, rr, elo, user, lang, type));
             }
 
             res.json({
