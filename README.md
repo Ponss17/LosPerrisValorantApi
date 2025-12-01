@@ -5,18 +5,20 @@
 ![Status](https://img.shields.io/badge/status-active-success.svg)
 
 > **Hub para comandos de Valorant.**
-> Diseñado para streamers, esta herramienta permite generar comandos personalizados para tu chat (Nightbot, StreamElements, etc.) sin tocar una sola línea de código.
+> Diseñado para streamers, esta herramienta permite generar comandos personalizados para tu chat (Nightbot, StreamElements, Botrix, etc.) sin tocar una sola línea de código.
 
 ---
 
 ## ✨ Novedades
 
-- **🎨 Diseño Premium**: Nueva interfaz oscura inspirada en la estética de Valorant.
-- **🌍 Traducción de Rangos**: Los nombres de los rangos se traducen automáticamente (ej. "Gold" -> "Oro").
-- **📈 Historial de MMR**: Gráfico interactivo para visualizar tu progreso de ELO en las últimas partidas.
-- **🕒 Fecha de Partida**: Visualización precisa de cuándo se jugó la última partida.
-- **⚡ Velocidad**: Carga de perfil optimizada y ultra-rápida.
-- **🛡️ Robustez**: Mensajes de error claros para usuarios inexistentes o problemas de conexión.
+- **🎨 Diseño Premium**: Nueva interfaz oscura inspirada en la estética de Valorant, con menús en rojo intenso (`#ff4655`) y campos transparentes.
+- **🤖 Soporte Botrix**: Ahora compatible con la plataforma Botrix.
+- **📱 Móvil Optimizado**: Interfaz 100% responsiva y ajustada para celulares.
+- **🌍 Traducción Inteligente**:
+    - **Español**: Respuestas naturales ("Actualmente estoy en Diamante 1...").
+    - **Inglés**: Formato simplificado ("Diamond 1 - 17RR").
+- **📈 Historial de MMR**: Gráfico interactivo para visualizar tu progreso.
+- **⚡ Velocidad**: Carga optimizada y búsquedas recientes instantáneas.
 
 ---
 
@@ -32,27 +34,22 @@ Ingresa tu **Riot ID** y **Tag** (ej. `PonssLoveless #8882`) y selecciona tu reg
 
 ### 2. Configura tu Bot
 Personaliza la respuesta del bot en la sección **"Configuración del Bot"**:
-- **Plataforma**: Nightbot, StreamElements, Fossabot, Streamlabs.
+- **Plataforma**: Nightbot, StreamElements, Botrix, Fossabot, Streamlabs.
 - **Idioma**: Español o Inglés.
-- **Formato**:
-    - *Solo Rango*: "Gold 1"
-    - *Rango + Puntos*: "Gold 1 - 50 RR"
-    - *Completo*: "Gold 1 - 50 RR (1200 ELO)"
+- **Formato**: Elige qué información mostrar (Solo Rango, con Puntos, con ELO, KDA, HS%, etc.).
 
 ### 3. Comandos del Bot
 Copia el código generado en la web y pégalo en tu chat.
 
-#### 📝 Ejemplos de Respuesta (Español)
+#### 📝 Ejemplos de Respuesta
 
-**Comando de Rango (!rank):**
-- *Tipo 1*: "actualmente estoy en Ascendant 1"
-- *Tipo 2*: "actualmente estoy en Ascendant 1 con 50 puntos"
-- *Tipo 3*: "actualmente estoy en Ascendant 1 con 50 puntos, mi mmr es de 1200"
+**Español (Natural):**
+- **!rango**: "Actualmente estoy en Diamante 1 con 50 puntos"
+- **!partida**: "Mi última partida fue en Sunset con Cypher gané 17 puntos"
 
-**Comando de Última Partida (!lastmatch):**
-- *Tipo 1*: "mi última partida fue en Ascent con Jett gané 23 puntos"
-- *Tipo 2*: "mi última partida fue en Ascent con Jett gané 23 puntos (13/5/8)"
-- *Tipo 3*: "mi última partida fue en Ascent con Jett gané 23 puntos (13/5/8 y 45.2% HS)"
+**Inglés (Simplificado):**
+- **!rank**: "Diamond 1 - 50 RR"
+- **!lastmatch**: "Sunset - Win - 13/5/8"
 
 ---
 
@@ -62,31 +59,29 @@ Copia el código generado en la web y pégalo en tu chat.
 |------------|---------|
 | **Nightbot** | `$(urlfetch ...)` |
 | **StreamElements** | `${customapi ...}` |
+| **Botrix** | `$(urlfetch ...)` |
 | **Fossabot** | `$(customapi ...)` |
 | **Streamlabs** | `{readapi ...}` |
 
 ---
 
-### 🎛️ Personalización Total
-Configura el bot exactamente como lo quieres:
-- **Idioma**: Respuestas en Español o Inglés.
-- **Plataforma**: Compatible con Nightbot, StreamElements, Fossabot y Streamlabs.
-- **Formato**: Elige qué información mostrar (Solo Rango, con Puntos, con ELO, KDA, HS%, etc.).
+## 🛠️ API Endpoints (Para Desarrolladores)
 
-### 📊 Visualización Completa
-No es solo un generador de comandos. La web te permite:
-- Ver tu **progreso de MMR** en un gráfico interactivo.
-- Analizar tu **última partida** con detalles de KDA y porcentaje de Headshots.
-- Guardar tus **búsquedas recientes** para acceso rápido.
+Si eres desarrollador, puedes usar la API directamente. Añade `?format=text` para respuestas en texto plano.
 
-### 🌍 Soporte Multi-Región
-Funciona para todas las regiones competitivas de Valorant:
-- **NA** (North America)
-- **EU** (Europe)
-- **LATAM** (Latin America)
-- **BR** (Brazil)
-- **KR** (Korea)
-- **AP** (Asia Pacific)
+### Rango
+`GET /rank/:region/:name/:tag`
+- **Params**: `lang=es|en`, `type=1|2|3`
+- **Ejemplo**: `/rank/na/PonssLoveless/8882?format=text&lang=es`
+
+### Última Partida
+`GET /match/last/:region/:name/:tag`
+- **Params**: `lang=es|en`, `type=1|2|3`
+- **Ejemplo**: `/match/last/na/PonssLoveless/8882?format=text&lang=es`
+
+### Historial
+`GET /history/:region/:name/:tag`
+- Devuelve JSON con el historial de MMR.
 
 ---
 
