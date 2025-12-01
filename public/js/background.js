@@ -6,15 +6,6 @@ document.addEventListener('DOMContentLoaded', () => {
 async function initDynamicBackground() {
     const bgContainer = document.createElement('div');
     bgContainer.id = 'dynamic-bg';
-    Object.assign(bgContainer.style, {
-        position: 'fixed',
-        top: '0',
-        left: '0',
-        width: '100%',
-        height: '100%',
-        zIndex: '-2',
-        pointerEvents: 'none'
-    });
     document.body.prepend(bgContainer);
 
     const layer1 = createLayer();
@@ -51,17 +42,7 @@ async function initDynamicBackground() {
 
 function createLayer() {
     const div = document.createElement('div');
-    Object.assign(div.style, {
-        position: 'absolute',
-        top: '0',
-        left: '0',
-        width: '100%',
-        height: '100%',
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        transition: 'opacity 1.5s ease-in-out',
-        opacity: '0'
-    });
+    div.classList.add('bg-layer');
     return div;
 }
 
