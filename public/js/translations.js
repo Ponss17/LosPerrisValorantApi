@@ -87,3 +87,7 @@ const translations = {
         'Radiant': 'Radiante'
     }
 };
+
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = translations;
+}

@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { getMMRByPUUID } = require('../utils/henrikApi');
-const { getAccountData, handleRouteError } = require('../utils/helpers');
+const { getAccountData, handleRouteError, translateRank } = require('../utils/helpers');
 const { formatRankData } = require('../utils/formatters');
 
 router.get('/:region/:name/:tag', async (req, res) => {
@@ -21,7 +21,7 @@ router.get('/:region/:name/:tag', async (req, res) => {
             if (req.query.format === 'text') {
                 const lang = req.query.lang || 'en';
                 const type = req.query.type || '1';
-                const rank = currentData.currenttierpatched;
+                const rank = translateRank(currentData.currenttierpatched, lang);
                 const rr = currentData.ranking_in_tier;
                 const elo = currentData.elo;
                 const user = `${accountData.data.name}#${accountData.data.tag}`;

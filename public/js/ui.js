@@ -256,6 +256,14 @@ function updateExamplePreviews(data, botLang, botType, botMatchType) {
     const r = data.data.rank;
     let rankName = formatRankName(r.rank, botLang);
 
+    if (botLang === 'es') {
+        const parts = rankName.split(' ');
+        const name = parts[0];
+        const tier = parts[1] || '';
+        const translatedName = translations.rankNames[name] || name;
+        rankName = tier ? `${translatedName} ${tier}` : translatedName;
+    }
+
     let rankText = '';
     if (botLang === 'es') {
         if (botType === '1') {

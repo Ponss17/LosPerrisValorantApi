@@ -34,4 +34,17 @@ function handleRouteError(req, res, error) {
     res.status(status).json(error.data || { message: error.message });
 }
 
-module.exports = { getAccountData, handleRouteError };
+const translations = require('../../public/js/translations');
+
+function translateRank(rankName, lang) {
+    if (lang !== 'es' || !rankName) return rankName;
+
+    const parts = rankName.split(' ');
+    const name = parts[0];
+    const tier = parts[1] || '';
+
+    const translatedName = translations.rankNames[name] || name;
+    return tier ? `${translatedName} ${tier}` : translatedName;
+}
+
+module.exports = { getAccountData, handleRouteError, translateRank };
