@@ -1,4 +1,4 @@
-const { formatRankData, formatMatchData, formatHistoryData } = require('./formatters');
+const { formatRankData, formatMatchData, formatHistoryData } = require('../src/utils/formatters');
 
 describe('formatters.js', () => {
     describe('formatRankData', () => {
