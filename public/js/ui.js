@@ -300,7 +300,7 @@ function updateExamplePreviews(data, botLang, botType, botMatchType) {
             } else if (botMatchType === '2') {
                 matchText = `Mi última partida fue en ${map} con ${agent} ${resultVerb} ${pointsMsg} mi kda fue de ${kda}`;
             } else {
-                matchText = `Mi última partida fue en ${map} con ${agent} ${resultVerb} ${pointsMsg} mi kda fue de ${kda} y mi porcentaje de HS fue de ${hs}% HS`;
+                matchText = `Mi última partida fue en ${map} con ${agent} ${resultVerb} ${pointsMsg} mi kda fue de ${kda}, mi porcentaje de HS fue de ${hs}% HS`;
             }
         } else {
             if (botMatchType === '1') {
